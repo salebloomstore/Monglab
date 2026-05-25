@@ -41,6 +41,8 @@ services:
       - nest-cluster
     command: |
       bash -c "
+        set -e
+
         while [ ! -f /etc/mongo-keyfile ]; do
           echo 'WAITING FOR KEYFILE...'
           sleep 5
@@ -51,10 +53,10 @@ services:
         mkdir -p /data/sharde-fansip
         mkdir -p /data/sharde-fujimo
 
-        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/mongod.log
-        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/mongod.log
-        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
-        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
         echo 'WAITING FOR config-server-dn'
         until mongosh --quiet --host mongos-router-dn:27018 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
@@ -146,6 +148,8 @@ services:
       - nest-cluster
     command: |
       bash -c "
+        set -e
+
         while [ ! -f /etc/mongo-keyfile ]; do
           echo 'WAITING FOR KEYFILE...'
           sleep 5
@@ -156,10 +160,10 @@ services:
         mkdir -p /data/sharde-fansip
         mkdir -p /data/sharde-fujimo
 
-        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/mongod.log
-        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/mongod.log
-        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
-        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
         tail -f /dev/null
       "
@@ -174,6 +178,8 @@ services:
       - nest-cluster
     command: |
       bash -c "
+        set -e
+
         while [ ! -f /etc/mongo-keyfile ]; do
           echo 'WAITING FOR KEYFILE...'
           sleep 5
@@ -184,10 +190,10 @@ services:
         mkdir -p /data/sharde-fansip
         mkdir -p /data/sharde-fujimo
 
-        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/mongod.log
-        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/mongod.log
-        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
-        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
         tail -f /dev/null
       "
