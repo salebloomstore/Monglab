@@ -24,16 +24,135 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     entrypoint: ["bash", "/keygen/create-keyfile.sh"]
 
-  # mongos-router-dn:
-  #   container_name: ${APP_NAME}_mongos-router-dn
-  #   image: mongo:7
-  #   volumes:
-  #       - ./keyfile:/etc
-  #       - ./init/init-shard-dn.js:/init/init.js:ro
-  #       # - ./data/config-sv/config-sv-primary:/data/db
-  #   env_file: .env
-  #   networks:
-  #       - nest-cluster
-  #   command: |
-  #     bash -c "
-  #     "
+  mongos-router-dn:
+    container_name: ${APP_NAME}_mongos-router-dn
+    image: mongo:7
+    volumes:
+        - ./keyfile:/etc
+        - ./init/init-shard-everes.js:/init/init-everes.js:ro
+        - ./init/init-shard-fansip.js:/init/init-fansip.js:ro
+        - ./init/init-shard-fujimo.js:/init/init-fujimo.js:ro
+        # - ./data/config-sv/config-sv-primary:/data/db
+    env_file: .env
+    networks:
+        - nest-cluster
+    command: |
+      bash -c "
+        while [ ! -f /etc/mongo-keyfile ]; do
+          echo 'WAITING FOR KEYFILE...'
+          sleep 5
+        done
+
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --fork --logpath /tmp/mongod.log
+
+        echo 'WAITING FOR sharde-everes-dn'
+        until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-everes-dn READY'
+
+        echo 'WAITING FOR sharde-fansip-dn'
+        until mongosh --quiet --host mongos-router-dn:27020 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-fansip-dn READY'
+
+        echo 'WAITING FOR sharde-fujimo-dn'
+        until mongosh --quiet --host mongos-router-dn:27021 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-fujimo-dn READY'
+
+        echo 'WAITING FOR sharde-everes-hn'
+        until mongosh --quiet --host mongos-router-hn:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-everes-hn READY'
+
+        echo 'WAITING FOR sharde-fansip-hn'
+        until mongosh --quiet --host mongos-router-hn:27020 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-fansip-hn READY'
+
+        echo 'WAITING FOR sharde-fujimo-hn'
+        until mongosh --quiet --host mongos-router-hn:27021 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-fujimo-hn READY'
+
+        echo 'WAITING FOR sharde-everes-sg'
+        until mongosh --quiet --host mongos-router-sg:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-everes-sg READY'
+
+        echo 'WAITING FOR sharde-fansip-sg'
+        until mongosh --quiet --host mongos-router-sg:27020 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-fansip-sg READY'
+
+        echo 'WAITING FOR sharde-fujimo-sg'
+        until mongosh --quiet --host mongos-router-sg:27021 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'sharde-fujimo-sg READY'
+
+        mongosh --host mongos-router-dn:27019 /init/init-everes.js
+        mongosh --host mongos-router-dn:27020 /init/init-fansip.js
+        mongosh --host mongos-router-dn:27021 /init/init-fujimo.js
+
+        tail -f /dev/null
+      "
+
+  mongos-router-hn:
+    container_name: ${APP_NAME}_mongos-router-hn
+    image: mongo:7
+    volumes:
+        - ./keyfile:/etc
+        # - ./data/config-sv/config-sv-primary:/data/db
+    env_file: .env
+    networks:
+        - nest-cluster
+    command: |
+      bash -c "
+        while [ ! -f /etc/mongo-keyfile ]; do
+          echo 'WAITING FOR KEYFILE...'
+          sleep 5
+        done
+
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --fork --logpath /tmp/mongod.log
+
+        tail -f /dev/null
+      "
+
+  mongos-router-sg:
+    container_name: ${APP_NAME}_mongos-router-sg
+    image: mongo:7
+    volumes:
+        - ./keyfile:/etc
+        # - ./data/config-sv/config-sv-primary:/data/db
+    env_file: .env
+    networks:
+        - nest-cluster
+    command: |
+      bash -c "
+        while [ ! -f /etc/mongo-keyfile ]; do
+          echo 'WAITING FOR KEYFILE...'
+          sleep 5
+        done
+
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --fork --logpath /tmp/mongod.log
+
+        tail -f /dev/null
+      "
