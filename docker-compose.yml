@@ -314,7 +314,7 @@ services:
         echo 'SHARDE-FUJIMO-SG READY'
         echo '--- ALL MONGOD OF NEST-CLUSTER STARTED WITH AUTH'
 
-        echo '--- CONFIGURATING CONFIG-SERVER-DN FOR MONGOS-ROUTER-HN'
+        echo '--- CONFIGURATING CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
         until mongosh --quiet --host mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo '--- CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
