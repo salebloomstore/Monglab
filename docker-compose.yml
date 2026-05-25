@@ -5,7 +5,7 @@
 # - Config Servers (configRS)
 # - Shardes: everesRS / fansipRS / fujimoRS
 # - Router: mongos-router-dn / mongos-router-hn / mongos-router-sg
-# - UI: mongo-express
+# - UI: mongos-expres-io
 # =====================================================
 
 version: "3.9"
