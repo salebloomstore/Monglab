@@ -8,8 +8,6 @@
 # - UI: mongos-expres-io
 # =====================================================
 
-version: "3.9"
-
 networks:
   nest-cluster:
     external: true
