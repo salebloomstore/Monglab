@@ -215,9 +215,13 @@ services:
 
         echo 'WAITING FOR ALL MONGOD TO START...'
         mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        rm -f /pitfall/restart-config-server-done
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        rm -f /pitfall/restart-sharde-everes-done
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        rm -f /pitfall/restart-sharde-fansip-done
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
+        rm -f /pitfall/restart-sharde-fujimo-done
 
         tail -f /dev/null
       "
@@ -277,9 +281,13 @@ services:
 
         echo 'WAITING FOR ALL MONGOD TO START...'
         mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        rm -f /pitfall/restart-config-server-done
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        rm -f /pitfall/restart-sharde-everes-done
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        rm -f /pitfall/restart-sharde-fansip-done
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
+        rm -f /pitfall/restart-sharde-fujimo-done
 
         tail -f /dev/null
       "
