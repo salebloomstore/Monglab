@@ -161,6 +161,7 @@ services:
     volumes:
         - ./keyfile:/etc
         # - ./data/config-sv/config-sv-primary:/data/db
+    env_file: .env
     networks:
       - nest-cluster
     command: |
@@ -222,6 +223,7 @@ services:
     volumes:
         - ./keyfile:/etc
         # - ./data/config-sv/config-sv-primary:/data/db
+    env_file: .env
     networks:
       - nest-cluster
     command: |

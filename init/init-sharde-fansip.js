@@ -68,7 +68,7 @@ db.createUser({
 print("🔐 ADMIN USER CREATED SUCCESSFULLY")
 
 db.getSiblingDB("admin").init_status.insertOne({
-  replicaSet: "fanshipRS",
+  replicaSet: "fansipRS",
   done: true,
   createdAt: new Date()
 })
