@@ -360,19 +360,6 @@ services:
         mongod --replSet fujimoRS --bind_ip_all --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log --shardsvr
         echo 'THE NODES HAVE FINISHED BOOTING UP'
 
-        while [ ! -f /pitfall/restart-config-server-done ]; do
-          sleep 2
-        done
-        while [ ! -f /pitfall/restart-sharde-everes-done ]; do
-          sleep 2
-        done
-        while [ ! -f /pitfall/restart-sharde-fansip-done ]; do
-          sleep 2
-        done
-        while [ ! -f /pitfall/restart-sharde-fujimo-done ]; do
-          sleep 2
-        done
-
         echo 'WAITING FOR ALL MONGOD OF MONGOS-ROUTER-DN START WITH AUTH'
         while [ ! -f /pitfall/restart-config-server-done ]; do sleep 2; done
         while [ ! -f /pitfall/restart-sharde-everes-done ]; do sleep 2; done
