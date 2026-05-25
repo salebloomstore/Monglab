@@ -45,7 +45,7 @@ services:
 
         while [ ! -f /etc/mongo-keyfile ]; do
           echo 'WAITING FOR KEYFILE...'
-          sleep 5
+          sleep 2
         done
 
         mkdir -p /data/config-server
@@ -135,6 +135,23 @@ services:
         mongosh --host mongos-router-dn:27020 /init/init-sharde-fansip.js
         mongosh --host mongos-router-dn:27021 /init/init-sharde-fujimo.js
 
+        mongod --shutdown --dbpath /data/config-server
+        mongod --shutdown --dbpath /data/sharde-everes
+        mongod --shutdown --dbpath /data/sharde-fansip
+        mongod --shutdown --dbpath /data/sharde-fujimo
+
+        echo 'WAITING FOR ALL MONGOD TO STOP...'
+        while pidof mongod > /dev/null; do
+          sleep 2
+        done
+        echo 'ALL MONGOD STOPPED'
+
+        echo 'WAITING FOR ALL MONGOD TO START...'
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
+
         tail -f /dev/null
       "
 
@@ -152,7 +169,7 @@ services:
 
         while [ ! -f /etc/mongo-keyfile ]; do
           echo 'WAITING FOR KEYFILE...'
-          sleep 5
+          sleep 2
         done
 
         mkdir -p /data/config-server
@@ -164,6 +181,37 @@ services:
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
+
+        until mongosh --quiet --host mongos-router-dn:27018 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27020 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27021 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
         tail -f /dev/null
       "
@@ -182,7 +230,7 @@ services:
 
         while [ ! -f /etc/mongo-keyfile ]; do
           echo 'WAITING FOR KEYFILE...'
-          sleep 5
+          sleep 2
         done
 
         mkdir -p /data/config-server
@@ -194,6 +242,37 @@ services:
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
+
+        until mongosh --quiet --host mongos-router-dn:27018 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27020 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27021 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+          sleep 2
+        done
+
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
         tail -f /dev/null
       "

@@ -30,8 +30,10 @@ print("🚀 SHARDE-EVERES SET INIT DONE")
 print("⏳ WAITING PRIMARY...")
 
 
-while (!db.hello().isWritablePrimary) {
-  sleep(2)
+while (true) {
+  const hello = db.hello()
+  if (hello.isWritablePrimary) { break }
+  sleep(2000)
 }
 
 print("✅ SHARDE-EVERES INIT DONE")
@@ -61,3 +63,11 @@ db.createUser({
 })
 
 print("🔐 ADMIN USER CREATED SUCCESSFULLY")
+
+db.getSiblingDB("admin").init_status.insertOne({
+  replicaSet: "everesRS",
+  done: true,
+  createdAt: new Date()
+})
+
+sleep(2000)
