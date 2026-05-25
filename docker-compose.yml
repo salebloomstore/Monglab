@@ -232,6 +232,12 @@ services:
         done
         echo 'sharde-fujimo-sg READY'
 
+        mongos --configdb cfgRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+
+        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+
         mongosh --host _mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
 
         tail -f /dev/null
@@ -374,6 +380,12 @@ services:
           sleep 2
         done
         echo 'sharde-fujimo-sg READY'
+
+        mongos --configdb cfgRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+
+        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
 
         mongosh --host _mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
 
@@ -518,7 +530,46 @@ services:
         done
         echo 'sharde-fujimo-sg READY'
 
+        mongos --configdb cfgRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+
+        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+          sleep 2
+        done
+
         mongosh --host _mongos-router-sg --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
 
         tail -f /dev/null
       "
+
+  mongos-expres-io:
+    container_name: ${APP_NAME}_mongos-expres-io
+    image: mongo-express
+    depends_on:
+      - mongos-router-dn
+      - mongos-router-hn
+      - mongos-router-sg
+    env_file: .env
+    ports:
+      - "8081:8081"
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMIN_CONFIG_SV}:${MONGO_PASSWORD_CONFIG_SV}@mongos-router-dn:27017,mongos-router-hn:27017,mongos-router-sg:27017/admin?authSource=admin
+      ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_ADMIN}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
+    command: |
+      bash -c "
+      echo 'Waiting for mongos startup...'
+      until nc -z mongos-router-dn 27017; do
+        sleep 2
+      done
+      until nc -z mongos-router-hn 27017; do
+        sleep 2
+      done
+      until nc -z mongos-router-sg 27017; do
+        sleep 2
+      done
+      echo 'mongos is ready'
+      /sbin/tini -- node app
+      "
+    networks:
+      - nest-cluster
