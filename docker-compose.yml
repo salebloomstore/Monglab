@@ -1,0 +1,39 @@
+# =====================================================
+# DOCKER COMPOSE - MONGODB SHARDED CLUSTER
+# =====================================================
+# Stack:
+# - Config Servers (cfgRS)
+# - Shards: dnRS / hnRS / sgRS
+# - Router: mongos
+# - UI: mongo-express
+# =====================================================
+
+version: "3.9"
+
+networks:
+  nest-cluster:
+    external: true
+
+services:
+  keygen:
+    container_name: ${APP_NAME}_keygen
+    image: mongo:7
+    volumes:
+      - ./keyfile:/keyfile
+      - ./keygen:/keygen
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: ["bash", "/keygen/create-keyfile.sh"]
+
+  mongos-router-dn:
+    container_name: ${APP_NAME}_mongos-router-dn
+    image: mongo:7
+    volumes:
+        - ./keyfile:/etc
+        - ./init/init-shard-dn.js:/init/init.js:ro
+        # - ./data/config-sv/config-sv-primary:/data/db
+    env_file: .env
+    networks:
+        - nest-cluster
+    command: |
+      bash -c "
+      "
