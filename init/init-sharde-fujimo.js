@@ -9,17 +9,17 @@ rs.initiate({
     {
       _id: 0,
       host: "mongos-router-dn:27021",
-      priority: 100
+      priority: 2
     },
     {
       _id: 1,
       host: "mongos-router-hn:27021",
-      priority: 10
+      priority: 1
     },
     {
       _id: 2,
       host: "mongos-router-sg:27021",
-      priority: 1
+      priority: 0.5
     }
   ]
 })
