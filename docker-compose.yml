@@ -50,10 +50,10 @@ services:
         mkdir -p /data/sharde-fansip
         mkdir -p /data/sharde-fujimo
 
-        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
-        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
-        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
-        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --fork --logpath /tmp/mongod.log
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/mongod.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/mongod.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
 
         echo 'WAITING FOR sharde-everes-dn'
         until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
@@ -137,10 +137,10 @@ services:
         mkdir -p /data/sharde-fansip
         mkdir -p /data/sharde-fujimo
 
-        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
-        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
-        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
-        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --fork --logpath /tmp/mongod.log
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/mongod.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/mongod.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
 
         tail -f /dev/null
       "
@@ -166,10 +166,10 @@ services:
         mkdir -p /data/sharde-fansip
         mkdir -p /data/sharde-fujimo
 
-        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
-        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
-        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
-        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --fork --logpath /tmp/mongod.log
+        mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --dbpath /data/config-server --fork --logpath /tmp/mongod.log
+        mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --dbpath /data/sharde-everes --fork --logpath /tmp/mongod.log
+        mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
+        mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
 
         tail -f /dev/null
       "
