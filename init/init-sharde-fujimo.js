@@ -66,11 +66,3 @@ db.createUser({
 })
 
 print("🔐 ADMIN USER CREATED SUCCESSFULLY")
-
-db.getSiblingDB("admin").init_status.insertOne({
-  replicaSet: "fujimoRS",
-  done: true,
-  createdAt: new Date()
-})
-
-sleep(2000)

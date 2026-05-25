@@ -35,6 +35,7 @@ services:
         - ./init/init-sharde-everes.js:/init/init-sharde-everes.js:ro
         - ./init/init-sharde-fansip.js:/init/init-sharde-fansip.js:ro
         - ./init/init-sharde-fujimo.js:/init/init-sharde-fujimo.js:ro
+        - ./pitfall:/pitfall
         # - ./data/config-sv/config-sv-primary:/data/db
     env_file: .env
     networks:
@@ -148,9 +149,13 @@ services:
 
         echo 'WAITING FOR ALL MONGOD TO START...'
         mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log
+        touch /pitfall/restart-config-server-done
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-everes --fork --logpath /tmp/sharde-everes.log
+        touch /pitfall/restart-sharde-everes-done
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
+        touch /pitfall/restart-sharde-fansip-done
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
+        touch /pitfall/restart-sharde-fujimo-done
 
         tail -f /dev/null
       "
@@ -160,6 +165,7 @@ services:
     image: mongo:7
     volumes:
         - ./keyfile:/etc
+        - ./pitfall:/pitfall
         # - ./data/config-sv/config-sv-primary:/data/db
     env_file: .env
     networks:
@@ -183,29 +189,16 @@ services:
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
-        until mongosh --quiet --host mongos-router-dn:27018 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+        while [ ! -f /pitfall/restart-config-server-done ]; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+        while [ ! -f /pitfall/restart-sharde-everes-done ]; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27020 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+        while [ ! -f /pitfall/restart-sharde-fansip-done ]; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27021 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
-          sleep 2
-        done
-
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
-          sleep 2
-        done
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
-          sleep 2
-        done
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
-          sleep 2
-        done
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        while [ ! -f /pitfall/restart-sharde-fujimo-done ]; do
           sleep 2
         done
 
@@ -222,6 +215,7 @@ services:
     image: mongo:7
     volumes:
         - ./keyfile:/etc
+        - ./pitfall:/pitfall
         # - ./data/config-sv/config-sv-primary:/data/db
     env_file: .env
     networks:
@@ -245,29 +239,16 @@ services:
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/sharde-fansip.log
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/sharde-fujimo.log
 
-        until mongosh --quiet --host mongos-router-dn:27018 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+        while [ ! -f /pitfall/restart-config-server-done ]; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+        while [ ! -f /pitfall/restart-sharde-everes-done ]; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27020 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
+        while [ ! -f /pitfall/restart-sharde-fansip-done ]; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27021 --eval 'db.getSiblingDB("admin").init_status.findOne({done:true}) != null' | grep true > /dev/null; do
-          sleep 2
-        done
-
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
-          sleep 2
-        done
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
-          sleep 2
-        done
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
-          sleep 2
-        done
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        while [ ! -f /pitfall/restart-sharde-fujimo-done ]; do
           sleep 2
         done
 
