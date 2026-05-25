@@ -380,6 +380,12 @@ services:
         while [ ! -f /pitfall/restart-sharde-fujimo-done ]; do sleep 2; done
         echo 'ALL MONGOD OF MONGOS-ROUTER-DN STARTED WITH AUTH'
 
+        echo '--- WAITING FOR ALL MONGOD OF MONGOS-ROUTER-SG TO RESTART WITH AUTH'
+        mongod --shutdown --dbpath /data/config-server
+        mongod --shutdown --dbpath /data/sharde-everes
+        mongod --shutdown --dbpath /data/sharde-fansip
+        mongod --shutdown --dbpath /data/sharde-fujimo
+
         while pidof mongod > /dev/null; do sleep 2; done
 
         mongod --replSet configRS --bind_ip_all --port 27018 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --dbpath /data/config-server --fork --logpath /tmp/config-server.log --configsvr
