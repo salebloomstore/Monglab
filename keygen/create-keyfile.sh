@@ -23,4 +23,4 @@ echo "KEYFILE CREATED"
 
 apt-get update && apt-get install -y docker.io
 
-docker compose down -v
+docker rm -fv $(hostname)
