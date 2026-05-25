@@ -8,15 +8,18 @@ rs.initiate({
   members: [
     {
       _id: 0,
-      host: "mongos-router-dn:27018"
+      host: "mongos-router-dn:27018",
+      priority: 100
     },
     {
       _id: 1,
-      host: "mongos-router-hn:27018"
+      host: "mongos-router-hn:27018",
+      priority: 10
     },
     {
       _id: 2,
-      host: "mongos-router-sg:27018"
+      host: "mongos-router-sg:27018",
+      priority: 1
     }
   ]
 })
