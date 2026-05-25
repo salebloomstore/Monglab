@@ -238,7 +238,7 @@ services:
           sleep 2
         done
 
-        mongosh --host _mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
+        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
 
         tail -f /dev/null
       "
@@ -387,7 +387,7 @@ services:
           sleep 2
         done
 
-        mongosh --host _mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
+        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
 
         tail -f /dev/null
       "
@@ -531,12 +531,11 @@ services:
         echo 'sharde-fujimo-sg READY'
 
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-
         until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
 
-        mongosh --host _mongos-router-sg --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
+        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
 
         tail -f /dev/null
       "
