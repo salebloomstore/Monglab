@@ -56,6 +56,12 @@ services:
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --dbpath /data/sharde-fansip --fork --logpath /tmp/mongod.log
         mongod --replSet fujimoRS --bind_ip_all --shardsvr --port 27021 --dbpath /data/sharde-fujimo --fork --logpath /tmp/mongod.log
 
+        echo 'WAITING FOR config-server-dn'
+        until mongosh --quiet --host mongos-router-dn:27018 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'config-server-dn READY'
+
         echo 'WAITING FOR sharde-everes-dn'
         until mongosh --quiet --host mongos-router-dn:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
           sleep 2
@@ -74,6 +80,12 @@ services:
         done
         echo 'sharde-fujimo-dn READY'
 
+        echo 'WAITING FOR config-server-hn'
+        until mongosh --quiet --host mongos-router-hn:27018 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'config-server-hn READY'
+
         echo 'WAITING FOR sharde-everes-hn'
         until mongosh --quiet --host mongos-router-hn:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
           sleep 2
@@ -91,6 +103,12 @@ services:
           sleep 2
         done
         echo 'sharde-fujimo-hn READY'
+
+        echo 'WAITING FOR config-server-sg'
+        until mongosh --quiet --host mongos-router-sg:27018 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+          sleep 2
+        done
+        echo 'config-server-sg READY'
 
         echo 'WAITING FOR sharde-everes-sg'
         until mongosh --quiet --host mongos-router-sg:27019 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
@@ -124,7 +142,6 @@ services:
     volumes:
         - ./keyfile:/etc
         # - ./data/config-sv/config-sv-primary:/data/db
-    env_file: .env
     networks:
       - nest-cluster
     command: |
@@ -153,7 +170,6 @@ services:
     volumes:
         - ./keyfile:/etc
         # - ./data/config-sv/config-sv-primary:/data/db
-    env_file: .env
     networks:
       - nest-cluster
     command: |
