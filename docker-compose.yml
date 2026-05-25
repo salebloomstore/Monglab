@@ -195,16 +195,16 @@ services:
           sleep 2
         done
 
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
 
@@ -256,16 +256,16 @@ services:
           sleep 2
         done
 
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do
           sleep 2
         done
 
