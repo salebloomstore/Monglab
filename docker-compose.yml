@@ -221,7 +221,7 @@ services:
         echo 'sharde-everes-sg READY'
 
         echo 'WAITING FOR sharde-fansip-sg'
-        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
           sleep 2
         done
         echo 'sharde-fansip-sg READY'
@@ -239,8 +239,6 @@ services:
         done
 
         mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
-
-        tail -f /dev/null
       "
 
   mongos-router-hn:
@@ -370,7 +368,7 @@ services:
         echo 'sharde-everes-sg READY'
 
         echo 'WAITING FOR sharde-fansip-sg'
-        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
           sleep 2
         done
         echo 'sharde-fansip-sg READY'
@@ -388,8 +386,6 @@ services:
         done
 
         mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
-
-        tail -f /dev/null
       "
 
   mongos-router-sg:
@@ -519,7 +515,7 @@ services:
         echo 'sharde-everes-sg READY'
 
         echo 'WAITING FOR sharde-fansip-sg'
-        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
+        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do
           sleep 2
         done
         echo 'sharde-fansip-sg READY'
@@ -536,8 +532,6 @@ services:
         done
 
         mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
-
-        tail -f /dev/null
       "
 
   mongos-expres-io:
