@@ -24,16 +24,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     entrypoint: ["bash", "/keygen/create-keyfile.sh"]
 
-  mongos-router-dn:
-    container_name: ${APP_NAME}_mongos-router-dn
-    image: mongo:7
-    volumes:
-        - ./keyfile:/etc
-        - ./init/init-shard-dn.js:/init/init.js:ro
-        # - ./data/config-sv/config-sv-primary:/data/db
-    env_file: .env
-    networks:
-        - nest-cluster
-    command: |
-      bash -c "
-      "
+  # mongos-router-dn:
+  #   container_name: ${APP_NAME}_mongos-router-dn
+  #   image: mongo:7
+  #   volumes:
+  #       - ./keyfile:/etc
+  #       - ./init/init-shard-dn.js:/init/init.js:ro
+  #       # - ./data/config-sv/config-sv-primary:/data/db
+  #   env_file: .env
+  #   networks:
+  #       - nest-cluster
+  #   command: |
+  #     bash -c "
+  #     "
