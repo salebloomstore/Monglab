@@ -2,9 +2,9 @@
 # DOCKER COMPOSE - MONGODB SHARDED CLUSTER
 # =====================================================
 # Stack:
-# - Config Servers (cfgRS)
-# - Shards: dnRS / hnRS / sgRS
-# - Router: mongos
+# - Config Servers (configRS)
+# - Shardes: everesRS / fansipRS / fujimoRS
+# - Router: mongos-router-dn / mongos-router-hn / mongos-router-sg
 # - UI: mongo-express
 # =====================================================
 
@@ -31,9 +31,10 @@ services:
     image: mongo:7
     volumes:
         - ./keyfile:/etc
-        - ./init/init-shard-everes.js:/init/init-everes.js:ro
-        - ./init/init-shard-fansip.js:/init/init-fansip.js:ro
-        - ./init/init-shard-fujimo.js:/init/init-fujimo.js:ro
+        - ./init/init-config-server.js:/init/init-config-server.js:ro
+        - ./init/init-sharde-everes.js:/init/init-sharde-everes.js:ro
+        - ./init/init-sharde-fansip.js:/init/init-sharde-fansip.js:ro
+        - ./init/init-sharde-fujimo.js:/init/init-sharde-fujimo.js:ro
         # - ./data/config-sv/config-sv-primary:/data/db
     env_file: .env
     networks:
@@ -109,9 +110,10 @@ services:
         done
         echo 'sharde-fujimo-sg READY'
 
-        mongosh --host mongos-router-dn:27019 /init/init-everes.js
-        mongosh --host mongos-router-dn:27020 /init/init-fansip.js
-        mongosh --host mongos-router-dn:27021 /init/init-fujimo.js
+        mongosh --host mongos-router-dn:27018 /init/init-config-server.js
+        mongosh --host mongos-router-dn:27019 /init/init-sharde-everes.js
+        mongosh --host mongos-router-dn:27020 /init/init-sharde-fansip.js
+        mongosh --host mongos-router-dn:27021 /init/init-sharde-fujimo.js
 
         tail -f /dev/null
       "
