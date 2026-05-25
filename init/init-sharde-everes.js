@@ -19,7 +19,7 @@ rs.initiate({
     {
       _id: 2,
       host: "mongos-router-sg:27019",
-      priority: 0.5
+      priority: 1
     }
   ]
 })
