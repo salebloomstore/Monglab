@@ -8,7 +8,7 @@
 // =========================
 
 sh.addShard(
-  "dnRS/shard-dn-primary:27017,shard-dn-assistant:27017,shard-dn-secretary:27017"
+  "everesRS/mongos-router-dn:27019,mongos-router-hn:27019,mongos-router-sg:27019"
 )
 
 
@@ -17,7 +17,7 @@ sh.addShard(
 // =========================
 
 sh.addShard(
-  "hnRS/shard-hn-primary:27017,shard-hn-assistant:27017,shard-hn-secretary:27017"
+  "fansipRS/mongos-router-dn:27020,mongos-router-hn:27020,mongos-router-sg:27020"
 )
 
 
@@ -26,7 +26,7 @@ sh.addShard(
 // =========================
 
 sh.addShard(
-  "sgRS/shard-sg-primary:27017,shard-sg-assistant:27017,shard-sg-secretary:27017"
+  "fujimoRS/mongos-router-dn:27021,mongos-router-hn:27021,mongos-router-sg:27021"
 )
 
 
