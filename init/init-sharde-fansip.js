@@ -2,9 +2,10 @@
 // SHARDE FANSIP REPLICA SET INITIALIZATION
 // =====================================================
 
+print("🚀 SHARDE-FANSIP SET INIT")
+
 rs.initiate({
   _id: "fansipRS",
-
   members: [
     {
       _id: 0,
@@ -24,14 +25,7 @@ rs.initiate({
   ]
 })
 
-
-// =====================================================
-// INITIAL STATUS
-// =====================================================
-
-print("🚀 SHARDE-FANSIP SET INIT DONE")
 print("⏳ WAITING PRIMARY...")
-
 
 while (true) {
   const hello = db.hello()
@@ -41,17 +35,12 @@ while (true) {
 
 print("✅ SHARDE-FANSIP INIT DONE")
 
-
-// =====================================================
-// SWITCH TO ADMIN DATABASE
-// =====================================================
-
-db = db.getSiblingDB("admin")
-
-
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
+
+// SWITCH TO ADMIN DATABASE
+db = db.getSiblingDB("admin")
 
 db.createUser({
   user: process.env.MONGO_ADMIN_SHARDE_FANSIP,

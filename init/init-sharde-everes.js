@@ -2,9 +2,10 @@
 // SHARDE EVERES REPLICA SET INITIALIZATION
 // =====================================================
 
+print("🚀 SHARDE-EVERES SET INIT")
+
 rs.initiate({
   _id: "everesRS",
-
   members: [
     {
       _id: 0,
@@ -24,14 +25,7 @@ rs.initiate({
   ]
 })
 
-
-// =====================================================
-// INITIAL STATUS
-// =====================================================
-
-print("🚀 SHARDE-EVERES SET INIT DONE")
 print("⏳ WAITING PRIMARY...")
-
 
 while (true) {
   const hello = db.hello()
@@ -41,17 +35,12 @@ while (true) {
 
 print("✅ SHARDE-EVERES INIT DONE")
 
-
-// =====================================================
-// SWITCH TO ADMIN DATABASE
-// =====================================================
-
-db = db.getSiblingDB("admin")
-
-
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
+
+// SWITCH TO ADMIN DATABASE
+db = db.getSiblingDB("admin")
 
 db.createUser({
   user: process.env.MONGO_ADMIN_SHARDE_EVERES,

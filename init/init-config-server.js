@@ -2,9 +2,10 @@
 // CONFIG SERVER REPLICA SET INITIALIZATION
 // =====================================================
 
+print("🚀 CONFIG-SERVER SET INIT")
+
 rs.initiate({
   _id: "configRS",
-
   members: [
     {
       _id: 0,
@@ -24,14 +25,7 @@ rs.initiate({
   ]
 })
 
-
-// =====================================================
-// INITIAL STATUS
-// =====================================================
-
-print("🚀 CONFIG-SERVER SET INIT DONE")
 print("⏳ WAITING PRIMARY...")
-
 
 while (true) {
   const hello = db.hello()
@@ -39,19 +33,14 @@ while (true) {
   sleep(2000)
 }
 
-print("✅ SHARDE-FUJIMO INIT DONE")
-
-
-// =====================================================
-// SWITCH TO ADMIN DATABASE
-// =====================================================
-
-db = db.getSiblingDB("admin")
-
+print("✅ CONFIG-SERVER INIT DONE")
 
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
+
+// SWITCH TO ADMIN DATABASE
+db = db.getSiblingDB("admin")
 
 db.createUser({
   user: process.env.MONGO_ADMIN_CONFIG_SERVER,
