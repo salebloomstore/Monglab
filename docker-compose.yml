@@ -45,6 +45,11 @@ services:
           sleep 5
         done
 
+        mkdir -p /data/config-server
+        mkdir -p /data/sharde-everes
+        mkdir -p /data/sharde-fansip
+        mkdir -p /data/sharde-fujimo
+
         mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
@@ -127,6 +132,11 @@ services:
           sleep 5
         done
 
+        mkdir -p /data/config-server
+        mkdir -p /data/sharde-everes
+        mkdir -p /data/sharde-fansip
+        mkdir -p /data/sharde-fujimo
+
         mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
         mongod --replSet fansipRS --bind_ip_all --shardsvr --port 27020 --fork --logpath /tmp/mongod.log
@@ -150,6 +160,11 @@ services:
           echo 'WAITING FOR KEYFILE...'
           sleep 5
         done
+
+        mkdir -p /data/config-server
+        mkdir -p /data/sharde-everes
+        mkdir -p /data/sharde-fansip
+        mkdir -p /data/sharde-fujimo
 
         mongod --replSet configRS --bind_ip_all --configsvr --port 27018 --fork --logpath /tmp/mongod.log
         mongod --replSet everesRS --bind_ip_all --shardsvr --port 27019 --fork --logpath /tmp/mongod.log
