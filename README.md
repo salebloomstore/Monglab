@@ -2,7 +2,8 @@
 
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB%207.0.14-green)
 ![Mongo Express](https://img.shields.io/badge/Admin-Mongo--Express%201.0.2-orange)
-![Docker](https://img.shields.io/badge/Deploy-Docker%2027.5-blue)
+![Docker Engine](https://img.shields.io/badge/Docker%20Engine-27.5.1-blue)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2.32.4-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
@@ -72,10 +73,16 @@ Before running this project, please install the following tools:
 
 # 🚀 Deployment
 
+### 0. Create Portainer if it does not already exist
+
+```bash
+docker compose -f portainer/docker-compose.yml up -d --build --force-recreate
+```
+
 ### 0. Create the shared Docker network if it does not already exist
 
 ```bash
-docker network create nest-cluster
+docker network create bloomn-etword
 ```
 
 ### 0. Fix permissions

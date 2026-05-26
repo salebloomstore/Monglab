@@ -8,13 +8,13 @@
 # - UI: mongos-expres-io
 # =====================================================
 
-name: nest-cluster
+name: mongos-incorr
 
 x-mongo-image: &mongo-image mongo:7.0.14@sha256:0032d2ca20db5fa34926f196c8a43b74e34ed239a7f2453ff1505b6f12ba8ea6
 x-mongo-express-image: &mongo-express-image mongo-express:1.0.2@sha256:1b23d7976f0210dbec74045c209e52fbb26d29b2e873d6c6fa3d3f0ae32c2a64
 
 networks:
-  nest-cluster:
+  bloomn-etword:
     external: true
 
 services:
@@ -30,7 +30,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     entrypoint: ["bash", "/keygen/create-keyfile.sh"]
     networks:
-      - nest-cluster
+      - bloomn-etword
 
   # =====================================================
   # MONGO ROUTER DN (Primary bootstrap node for cluster init)
@@ -51,7 +51,7 @@ services:
     ports:
       - ${MONGOS_ROUTER_DN_PORT}:27017
     networks:
-      - nest-cluster
+      - bloomn-etword
     command: |
       bash -c "
         set -e
@@ -149,7 +149,7 @@ services:
         touch /pitfall/restart-sharde-fujimo-done
         echo '--- ALL MONGOD OF MONGOS-ROUTER-DN STARTED WITH AUTH'
 
-        echo '--- WAITING FOR ALL MONGOD OF NEST-CLUSTER TO RESTART WITH AUTH'
+        echo '--- WAITING FOR ALL MONGOD OF bloomn-etword TO RESTART WITH AUTH'
         echo 'WAITING FOR CONFIG-SERVER-DN'
         until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-DN READY'
@@ -197,7 +197,7 @@ services:
         echo 'WAITING FOR SHARDE-FUJIMO-SG'
         until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-SG READY'
-        echo '--- ALL MONGOD OF NEST-CLUSTER STARTED WITH AUTH'
+        echo '--- ALL MONGOD OF bloomn-etword STARTED WITH AUTH'
 
         echo '--- CONFIGURATING CONFIG-SERVER-DN FOR MONGOS-ROUTER-DN'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
@@ -224,7 +224,7 @@ services:
     ports:
       - ${MONGOS_ROUTER_HN_PORT}:27017
     networks:
-      - nest-cluster
+      - bloomn-etword
     command: |
       bash -c "
         set -e
@@ -272,7 +272,7 @@ services:
         rm -f /pitfall/restart-sharde-fujimo-done
         echo 'ALL MONGOD OF MONGOS-ROUTER-HN STARTED WITH AUTH'
 
-        echo '--- WAITING FOR ALL MONGOD OF NEST-CLUSTER TO RESTART WITH AUTH'
+        echo '--- WAITING FOR ALL MONGOD OF bloomn-etword TO RESTART WITH AUTH'
         echo 'WAITING FOR CONFIG-SERVER-DN'
         until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-DN READY'
@@ -320,7 +320,7 @@ services:
         echo 'WAITING FOR SHARDE-FUJIMO-SG'
         until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-SG READY'
-        echo '--- ALL MONGOD OF NEST-CLUSTER STARTED WITH AUTH'
+        echo '--- ALL MONGOD OF bloomn-etword STARTED WITH AUTH'
 
         echo '--- CONFIGURATING CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
@@ -347,7 +347,7 @@ services:
     ports:
       - ${MONGOS_ROUTER_SG_PORT}:27017
     networks:
-      - nest-cluster
+      - bloomn-etword
     command: |
       bash -c "
         set -e
@@ -395,7 +395,7 @@ services:
         rm -f /pitfall/restart-sharde-fujimo-done
         echo 'ALL MONGOD OF MONGOS-ROUTER-SG STARTED WITH AUTH'
 
-        echo '--- WAITING FOR ALL MONGOD OF NEST-CLUSTER TO RESTART WITH AUTH'
+        echo '--- WAITING FOR ALL MONGOD OF bloomn-etword TO RESTART WITH AUTH'
         echo 'WAITING FOR CONFIG-SERVER-DN'
         until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-DN READY'
@@ -443,7 +443,7 @@ services:
         echo 'WAITING FOR SHARDE-FUJIMO-SG'
         until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-SG READY'
-        echo '--- ALL MONGOD OF NEST-CLUSTER STARTED WITH AUTH'
+        echo '--- ALL MONGOD OF bloomn-etword STARTED WITH AUTH'
 
         echo '--- CONFIGURATING CONFIG-SERVER-SG FOR MONGOS-ROUTER-SG'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
@@ -489,4 +489,4 @@ services:
       /sbin/tini -- node app
       "
     networks:
-      - nest-cluster
+      - bloomn-etword
