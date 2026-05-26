@@ -8,6 +8,9 @@
 # - UI: mongos-expres-io
 # =====================================================
 
+x-mongo-image: &mongo-image mongo:7.0.14
+x-mongo-express-image: &mongo-express-image mongo-express:1.0.2
+
 networks:
   nest-cluster:
     external: true
@@ -18,7 +21,7 @@ services:
   # =====================================================
   keygen:
     container_name: ${APP_NAME}_keygen
-    image: mongo:7
+    image: *mongo-image
     volumes:
       - ./keyfile:/keyfile
       - ./keygen:/keygen
@@ -32,7 +35,7 @@ services:
   # =====================================================
   mongos-router-dn:
     container_name: ${APP_NAME}_mongos-router-dn
-    image: mongo:7
+    image: *mongo-image
     volumes:
       - ./keyfile:/etc
       - ./mongo/cluster.js:/mongo/cluster.js:ro
@@ -209,7 +212,7 @@ services:
   # =====================================================
   mongos-router-hn:
     container_name: ${APP_NAME}_mongos-router-hn
-    image: mongo:7
+    image: *mongo-image
     volumes:
       - ./keyfile:/etc
       - ./mongo/cluster.js:/mongo/cluster.js:ro
@@ -332,7 +335,7 @@ services:
   # =====================================================
   mongos-router-sg:
     container_name: ${APP_NAME}_mongos-router-sg
-    image: mongo:7
+    image: *mongo-image
     volumes:
       - ./keyfile:/etc
       - ./mongo/cluster.js:/mongo/cluster.js:ro
@@ -455,7 +458,7 @@ services:
   # =====================================================
   mongos-expres-io:
     container_name: ${APP_NAME}_mongos-expres-io
-    image: mongo-express
+    image: *mongo-express-image
     depends_on:
       - mongos-router-dn
       - mongos-router-hn
