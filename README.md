@@ -99,6 +99,7 @@ docker compose down -v --remove-orphans
 ### 2. Build & start cluster
 
 #### Please configure .env_example before running
+
 ```bash
 cp .env_example .env && docker compose up -d --build --force-recreate
 ```
