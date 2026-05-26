@@ -13,7 +13,6 @@ networks:
     external: true
 
 services:
-
   # =====================================================
   # KEYFILE GENERATOR (used for MongoDB auth replication)
   # =====================================================
