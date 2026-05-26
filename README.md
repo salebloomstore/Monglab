@@ -1,8 +1,8 @@
 # 🍃 MongoDB Cluster System (MongoDB + Mongo Express + Docker)
 
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
-![Mongo Express](https://img.shields.io/badge/Admin-Mongo--Express-orange)
-![Docker](https://img.shields.io/badge/Deploy-Docker-blue)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB%207.0.14-green)
+![Mongo Express](https://img.shields.io/badge/Admin-Mongo--Express%201.0.2-orange)
+![Docker](https://img.shields.io/badge/Deploy-Docker%2027.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---

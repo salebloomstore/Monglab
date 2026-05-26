@@ -10,8 +10,8 @@
 
 name: nest-cluster
 
-x-mongo-image: &mongo-image mongo:7.0.14
-x-mongo-express-image: &mongo-express-image mongo-express:1.0.2
+x-mongo-image: &mongo-image mongo:7.0.14@sha256:0032d2ca20db5fa34926f196c8a43b74e34ed239a7f2453ff1505b6f12ba8ea6
+x-mongo-express-image: &mongo-express-image mongo-express:1.0.2@sha256:1b23d7976f0210dbec74045c209e52fbb26d29b2e873d6c6fa3d3f0ae32c2a64
 
 networks:
   nest-cluster:
