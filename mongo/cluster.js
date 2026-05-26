@@ -1,55 +1,18 @@
 // =====================================================
 // ADD SHARDS TO MONGODB CLUSTER
 // =====================================================
+sh.addShard("everesRS/mongos-router-dn:27019,mongos-router-hn:27019,mongos-router-sg:27019")
+sh.addShard("fansipRS/mongos-router-dn:27020,mongos-router-hn:27020,mongos-router-sg:27020")
+sh.addShard("fujimoRS/mongos-router-dn:27021,mongos-router-hn:27021,mongos-router-sg:27021")
 
-
-// =========================
-// DA NANG SHARD
-// =========================
-
-sh.addShard(
-  "everesRS/mongos-router-dn:27019,mongos-router-hn:27019,mongos-router-sg:27019"
-)
-
-
-// =========================
-// HA NOI SHARD
-// =========================
-
-sh.addShard(
-  "fansipRS/mongos-router-dn:27020,mongos-router-hn:27020,mongos-router-sg:27020"
-)
-
-
-// =========================
-// HO CHI MINH SHARD
-// =========================
-
-sh.addShard(
-  "fujimoRS/mongos-router-dn:27021,mongos-router-hn:27021,mongos-router-sg:27021"
-)
-
-
-// =====================================================
 // ENABLE SHARDING FOR DATABASE
-// =====================================================
-
 db = db.getSiblingDB("test")
-
 sh.enableSharding("test")
 
-
-// =====================================================
 // CREATE COLLECTION
-// =====================================================
-
 db.createCollection("examples")
 
-
-// =====================================================
 // SHARD COLLECTION CONFIGURATION
-// =====================================================
-
 sh.shardCollection(
   "test.examples",
   {
@@ -57,20 +20,11 @@ sh.shardCollection(
   }
 )
 
-
-// =====================================================
 // START INSERTING DATA
-// =====================================================
-
 print("START INSERT DATA")
 
-let bulk = []
-
-
-// =====================================================
 // GENERATE SAMPLE DATA
-// =====================================================
-
+let bulk = []
 for (let i = 0; i < 10; i++) {
 
   bulk.push({
@@ -82,18 +36,10 @@ for (let i = 0; i < 10; i++) {
 
 }
 
-
-// =====================================================
 // INSERT DATA INTO COLLECTION
-// =====================================================
-
 if (bulk.length > 0) {
   db.examples.insertMany(bulk)
 }
 
-
-// =====================================================
 // FINISH
-// =====================================================
-
 print("DONE")
