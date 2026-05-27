@@ -2,8 +2,8 @@
 
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB%207.0.14-green)
 ![Mongo Express](https://img.shields.io/badge/Admin-Mongo--Express%201.0.2-orange)
-![Docker Engine](https://img.shields.io/badge/Docker%20Engine-27.5.1-blue)
-![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2.32.4-blue)
+![Docker Engine](https://img.shields.io/badge/Docker%20Engine-29.5.2-blue)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v5.1.4-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
@@ -76,7 +76,7 @@ Before running this project, please install the following tools:
 ### 0. Create Portainer if it does not already exist
 
 ```bash
-cp portainer/.env_example portainer/.env && docker compose -f portainer/docker-compose.yml up -d --build --force-recreate
+cp portainer/.env.example portainer/.env && docker compose -f portainer/docker-compose.yml up -d --build --force-recreate
 ```
 
 ### 0. Create the shared Docker network if it does not already exist
@@ -105,8 +105,8 @@ docker compose down -v --remove-orphans
 
 ### 2. Build & start cluster
 
-#### Please configure .env_example before running
+#### Please configure .env.example before running
 
 ```bash
-cp .env_example .env && docker compose up -d --build --force-recreate
+cp .env.example .env && docker compose up -d --build --force-recreate
 ```

@@ -2,3 +2,5 @@
 /keyfile
 /data
 .env
+.env.*
+!.env.example
