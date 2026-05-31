@@ -43,8 +43,8 @@ print("✅ CONFIG-SERVER INIT DONE")
 db = db.getSiblingDB("admin")
 
 db.createUser({
-  user: process.env.MONGO_ADMIN_CONFIG_SERVER,
-  pwd: process.env.MONGO_PASSWORD_CONFIG_SERVER,
+  user: process.env.MONGO_ADMINIST_SHARDE_MATTER,
+  pwd: process.env.MONGO_PASSWORD_SHARDE_MATTER,
 
   roles: [
     {

@@ -11,28 +11,16 @@
 ## 👨‍💻 Author
 
 - Author: [Nguyễn Hoàng Anh](https://www.facebook.com/FakeofHA)
-- Created: May 21, 2026
-
----
-
-# 📌 Overview
-
-MongoDB cluster system using:
-
-- 🍃 MongoDB Replica Set
-- 📊 Mongo Express management
-- 🐳 Docker containerization
-- 🌐 Mongo Router (mongos)
+- Created: May 31, 2026
 
 ---
 
 # 🧱 Tech Stack
 
 ## 🗄️ Database
-- MongoDB
-- Mongo Express
-- Replica Set
-- Sharding Cluster
+- 📊 Mongo Express
+- 🍃 MongoDB Replica Set
+- 🌐 Sharding Cluster
 
 ## 🐳 DevOps
 - Docker Engine
@@ -73,16 +61,21 @@ Before running this project, please install the following tools:
 
 # 🚀 Deployment
 
-### 0. Create Portainer if it does not already exist
+### 0. Docker empty
 
 ```bash
-cp portainer/.env.example portainer/.env && docker compose -f portainer/docker-compose.yml up -d --build --force-recreate
+docker stop $(docker ps -aq) 2>/dev/null
+docker rm -f $(docker ps -aq) 2>/dev/null
+docker rmi -f $(docker images -aq) 2>/dev/null
+docker volume rm $(docker volume ls -q) 2>/dev/null
+docker network rm $(docker network ls -q --filter type=custom) 2>/dev/null
+docker builder prune -af
 ```
 
 ### 0. Create the shared Docker network if it does not already exist
 
 ```bash
-docker network create bloomn-etword
+docker network create master-netwrk
 ```
 
 ### 0. Fix permissions
@@ -103,10 +96,16 @@ find . -type f -name "*.sh" -exec chmod +x {} \;
 docker compose down -v --remove-orphans
 ```
 
-### 2. Build & start cluster
+### 2. Build & Start
 
 #### Please configure .env.example before running
 
 ```bash
-cp .env.example .env && docker compose up -d --build --force-recreate
+cp .env.example .env
+```
+
+#### Or configure .env before running
+
+```bash
+docker compose up -d --build --force-recreate
 ```

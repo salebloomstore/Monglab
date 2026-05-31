@@ -155,61 +155,61 @@ services:
 
         echo '--- WAITING FOR ALL MONGOD OF bloomn-etword TO RESTART WITH AUTH'
         echo 'WAITING FOR CONFIG-SERVER-DN'
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-DN READY'
 
         echo 'WAITING FOR SHARDE-EVERES-DN'
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-DN READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-DN'
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-DN READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-DN'
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-DN READY'
 
         echo 'WAITING FOR CONFIG-SERVER-HN'
-        until mongosh --quiet --host mongos-router-hn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-HN READY'
 
         echo 'WAITING FOR SHARDE-EVERES-hn'
-        until mongosh --quiet --host mongos-router-hn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-HN READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-HN'
-        until mongosh --quiet --host mongos-router-hn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-HN READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-HN'
-        until mongosh --quiet --host mongos-router-hn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-HN READY'
 
         echo 'WAITING FOR CONFIG-SERVER-SG'
-        until mongosh --quiet --host mongos-router-sg:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-SG READY'
 
         echo 'WAITING FOR SHARDE-EVERES-SG'
-        until mongosh --quiet --host mongos-router-sg:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-SG READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-SG'
-        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-SG READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-SG'
-        until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-SG READY'
         echo '--- ALL MONGOD OF bloomn-etword STARTED WITH AUTH'
 
         echo '--- CONFIGURATING CONFIG-SERVER-DN FOR MONGOS-ROUTER-DN'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo '--- CONFIG-SERVER-DN FOR MONGOS-ROUTER-DN CONFIGURATION COMPLETED'
 
         echo '--- WAITING FOR MONGOS-ROUTER-DN TO START WITH AUTH'
-        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
+        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
         echo '--- MONGOS-ROUTER-DN STARTED WITH AUTH'
       "
 
@@ -282,61 +282,61 @@ services:
 
         echo '--- WAITING FOR ALL MONGOD OF bloomn-etword TO RESTART WITH AUTH'
         echo 'WAITING FOR CONFIG-SERVER-DN'
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-DN READY'
 
         echo 'WAITING FOR SHARDE-EVERES-DN'
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-DN READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-DN'
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-DN READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-DN'
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-DN READY'
 
         echo 'WAITING FOR CONFIG-SERVER-HN'
-        until mongosh --quiet --host mongos-router-hn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-HN READY'
 
         echo 'WAITING FOR SHARDE-EVERES-hn'
-        until mongosh --quiet --host mongos-router-hn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-HN READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-HN'
-        until mongosh --quiet --host mongos-router-hn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-HN READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-HN'
-        until mongosh --quiet --host mongos-router-hn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-HN READY'
 
         echo 'WAITING FOR CONFIG-SERVER-SG'
-        until mongosh --quiet --host mongos-router-sg:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-SG READY'
 
         echo 'WAITING FOR SHARDE-EVERES-SG'
-        until mongosh --quiet --host mongos-router-sg:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-SG READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-SG'
-        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-SG READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-SG'
-        until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-SG READY'
         echo '--- ALL MONGOD OF bloomn-etword STARTED WITH AUTH'
 
         echo '--- CONFIGURATING CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-        until mongosh --quiet --host mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo '--- CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
 
         echo '--- WAITING FOR MONGOS-ROUTER-HN TO START WITH AUTH'
-        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
+        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
         echo '--- MONGOS-ROUTER-HN STARTED WITH AUTH'
       "
 
@@ -409,61 +409,61 @@ services:
 
         echo '--- WAITING FOR ALL MONGOD OF bloomn-etword TO RESTART WITH AUTH'
         echo 'WAITING FOR CONFIG-SERVER-DN'
-        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-DN READY'
 
         echo 'WAITING FOR SHARDE-EVERES-DN'
-        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-DN READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-DN'
-        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-DN READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-DN'
-        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-dn:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-DN READY'
 
         echo 'WAITING FOR CONFIG-SERVER-HN'
-        until mongosh --quiet --host mongos-router-hn:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-HN READY'
 
         echo 'WAITING FOR SHARDE-EVERES-hn'
-        until mongosh --quiet --host mongos-router-hn:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-HN READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-HN'
-        until mongosh --quiet --host mongos-router-hn:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-HN READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-HN'
-        until mongosh --quiet --host mongos-router-hn:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-hn:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-HN READY'
 
         echo 'WAITING FOR CONFIG-SERVER-SG'
-        until mongosh --quiet --host mongos-router-sg:27018 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27018 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'CONFIG-SERVER-SG READY'
 
         echo 'WAITING FOR SHARDE-EVERES-SG'
-        until mongosh --quiet --host mongos-router-sg:27019 -u ${MONGO_ADMIN_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27019 -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-EVERES-SG READY'
 
         echo 'WAITING FOR SHARDE-FANSIP-SG'
-        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMIN_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27020 -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FANSIP-SG READY'
 
         echo 'WAITING FOR SHARDE-FUJIMO-SG'
-        until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMIN_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg:27021 -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'SHARDE-FUJIMO-SG READY'
         echo '--- ALL MONGOD OF bloomn-etword STARTED WITH AUTH'
 
         echo '--- CONFIGURATING CONFIG-SERVER-SG FOR MONGOS-ROUTER-SG'
         mongos --configdb configRS/mongos-router-dn:27018,mongos-router-hn:27018,mongos-router-sg:27018 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-        until mongosh --quiet --host mongos-router-sg --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        until mongosh --quiet --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo '--- CONFIG-SERVER-SG FOR MONGOS-ROUTER-SG CONFIGURATION COMPLETED'
 
         echo '--- WAITING FOR MONGOS-ROUTER-SG TO START WITH AUTH'
-        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMIN_CONFIG_SERVER} -p ${MONGO_PASSWORD_CONFIG_SERVER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
+        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongos.log
         echo '--- MONGOS-ROUTER-SG STARTED WITH AUTH'
       "
 
@@ -482,7 +482,7 @@ services:
       - ${MONGOS_EXPRES_IO_PORT}:8081
     restart: always
     environment:
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMIN_CONFIG_SERVER}:${MONGO_PASSWORD_CONFIG_SERVER}@mongos-router-dn:27017,mongos-router-hn:27017,mongos-router-sg:27017/admin?authSource=admin
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMINIST_SHARDE_MATTER}:${MONGO_PASSWORD_SHARDE_MATTER}@mongos-router-dn:27017,mongos-router-hn:27017,mongos-router-sg:27017/admin?authSource=admin
       ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_ADMIN}
       ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
     command: |

@@ -43,7 +43,7 @@ print("✅ SHARDE-EVERES INIT DONE")
 db = db.getSiblingDB("admin")
 
 db.createUser({
-  user: process.env.MONGO_ADMIN_SHARDE_EVERES,
+  user: process.env.MONGO_ADMINIST_SHARDE_EVERES,
   pwd: process.env.MONGO_PASSWORD_SHARDE_EVERES,
 
   roles: [
