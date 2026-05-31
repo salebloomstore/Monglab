@@ -605,7 +605,15 @@ services:
         echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP MONGOS-ROUTER-DN IN PROGRESS WITH AUTH'
-        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js && tail -f /tmp/mongod.log
+        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js
+
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS'
+        while [ ! -f /pitfall/restart-mongos-router-hn-done ]; do sleep 2; done
+        while [ ! -f /pitfall/restart-mongos-router-sg-done ]; do sleep 2; done
+        rm -f /pitfall/*
+        echo 'THE MONGOS-ROUTER-HN HAVE FINISHED BOOTING UP'
+
+        tail -f /tmp/mongod.log
       "
 
   # =====================================================
@@ -684,7 +692,11 @@ services:
         echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS WITH AUTH'
-        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin && tail -f /tmp/mongod.log
+        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
+
+        touch /pitfall/restart-mongos-router-hn-done
+
+        tail -f /tmp/mongod.log
       "
 
   # =====================================================
@@ -763,5 +775,9 @@ services:
         echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS WITH AUTH'
-        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin && tail -f /tmp/mongod.log
+        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
+
+        touch /pitfall/restart-mongos-router-sg-done
+
+        tail -f /tmp/mongod.log
       "
