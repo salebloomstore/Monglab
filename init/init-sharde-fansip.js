@@ -12,12 +12,12 @@ rs.initiate({
     },
     {
       _id: 1,
-      host: "mongos-fansip-hn:27017",
+      host: "sharde-fansip-hn:27017",
       priority: 1
     },
     {
       _id: 2,
-      host: "mongos-fansip-sg:27017",
+      host: "sharde-fansip-sg:27017",
       priority: 1
     }
   ]
