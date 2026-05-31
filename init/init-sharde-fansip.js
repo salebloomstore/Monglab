@@ -7,17 +7,17 @@ rs.initiate({
   members: [
     {
       _id: 0,
-      host: "mongos-router-dn:27020",
+      host: "sharde-fansip-dn:27017",
       priority: 2
     },
     {
       _id: 1,
-      host: "mongos-router-hn:27020",
+      host: "mongos-fansip-hn:27017",
       priority: 1
     },
     {
       _id: 2,
-      host: "mongos-router-sg:27020",
+      host: "mongos-fansip-sg:27017",
       priority: 1
     }
   ]

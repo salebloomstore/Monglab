@@ -1,9 +1,9 @@
 // =====================================================
 // ADD SHARDS TO MONGODB CLUSTER
 // =====================================================
-sh.addShard("everesRS/mongos-router-dn:27019,mongos-router-hn:27019,mongos-router-sg:27019")
-sh.addShard("fansipRS/mongos-router-dn:27020,mongos-router-hn:27020,mongos-router-sg:27020")
-sh.addShard("fujimoRS/mongos-router-dn:27021,mongos-router-hn:27021,mongos-router-sg:27021")
+sh.addShard("everesRS/sharde-everes-dn:27017,sharde-everes-hn:27017,sharde-everes-sg:27017")
+sh.addShard("fansipRS/sharde-fansip-dn:27017,sharde-fansip-hn:27017,sharde-fansip-sg:27017")
+sh.addShard("fujimoRS/sharde-fujimo-dn:27017,sharde-fujimo-hn:27017,sharde-fujimo-sg:27017")
 
 // ENABLE SHARDING FOR DATABASE
 db = db.getSiblingDB("test")

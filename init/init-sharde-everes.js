@@ -7,17 +7,17 @@ rs.initiate({
   members: [
     {
       _id: 0,
-      host: "mongos-router-dn:27019",
+      host: "sharde-everes-dn:27017",
       priority: 2
     },
     {
       _id: 1,
-      host: "mongos-router-hn:27019",
+      host: "sharde-everes-hn:27017",
       priority: 1
     },
     {
       _id: 2,
-      host: "mongos-router-sg:27019",
+      host: "sharde-everes-sg:27017",
       priority: 1
     }
   ]
