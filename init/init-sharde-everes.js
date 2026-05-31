@@ -2,8 +2,6 @@
 // SHARDE EVERES REPLICA SET INITIALIZATION
 // =====================================================
 
-print("🚀 SHARDE-EVERES SET INIT")
-
 rs.initiate({
   _id: "everesRS",
   members: [
@@ -33,8 +31,6 @@ while (true) {
   sleep(2000)
 }
 
-print("✅ SHARDE-EVERES INIT DONE")
-
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
@@ -54,4 +50,4 @@ db.createUser({
   ]
 })
 
-print("🔐 ADMIN USER CREATED SUCCESSFULLY")
+print("🔐 SHARDE EVERES ADMIN USER CREATED SUCCESSFULLY")

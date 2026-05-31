@@ -2,8 +2,6 @@
 // SHARDE FUJIMO REPLICA SET INITIALIZATION
 // =====================================================
 
-print("🚀 SHARDE-FUJIMO SET INIT")
-
 rs.initiate({
   _id: "fujimoRS",
   members: [
@@ -33,8 +31,6 @@ while (true) {
   sleep(2000)
 }
 
-print("✅ SHARDE-FUJIMO INIT DONE")
-
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
@@ -54,4 +50,4 @@ db.createUser({
   ]
 })
 
-print("🔐 ADMIN USER CREATED SUCCESSFULLY")
+print("🔐 SHARDE FUJIMO ADMIN USER CREATED SUCCESSFULLY")

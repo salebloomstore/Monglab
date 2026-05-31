@@ -1,11 +1,9 @@
 // =====================================================
-// CONFIG SERVER REPLICA SET INITIALIZATION
+// SHARDE MATTER REPLICA SET INITIALIZATION
 // =====================================================
 
-print("🚀 CONFIG-SERVER SET INIT")
-
 rs.initiate({
-  _id: "configRS",
+  _id: "matterRS",
   members: [
     {
       _id: 0,
@@ -33,8 +31,6 @@ while (true) {
   sleep(2000)
 }
 
-print("✅ CONFIG-SERVER INIT DONE")
-
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
@@ -54,4 +50,4 @@ db.createUser({
   ]
 })
 
-print("🔐 ADMIN USER CREATED SUCCESSFULLY")
+print("🔐 SHARDE MATTER ADMIN USER CREATED SUCCESSFULLY")

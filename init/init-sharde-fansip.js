@@ -2,8 +2,6 @@
 // SHARDE FANSIP REPLICA SET INITIALIZATION
 // =====================================================
 
-print("🚀 SHARDE-FANSIP SET INIT")
-
 rs.initiate({
   _id: "fansipRS",
   members: [
@@ -33,8 +31,6 @@ while (true) {
   sleep(2000)
 }
 
-print("✅ SHARDE-FANSIP INIT DONE")
-
 // =====================================================
 // CREATE ROOT ADMIN USER
 // =====================================================
@@ -54,4 +50,4 @@ db.createUser({
   ]
 })
 
-print("🔐 ADMIN USER CREATED SUCCESSFULLY")
+print("🔐 SHARDE FANSIP ADMIN USER CREATED SUCCESSFULLY")
