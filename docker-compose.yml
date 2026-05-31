@@ -32,6 +32,7 @@ services:
     networks:
       - master-netwrk
 
+
   # =====================================================
   # SHARDE MATTER DN (Primary bootstrap node for cluster init)
   # =====================================================
