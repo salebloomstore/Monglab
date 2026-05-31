@@ -1,11 +1,11 @@
 # =====================================================
 # DOCKER COMPOSE - MONGODB SHARDED CLUSTER
 # =====================================================
-# Stack Overview:
-# - Config Servers (matterRS)
-# - Shardes: everesRS / fansipRS / fujimoRS
-# - Routers: mongos-router-dn / mongos-router-hn / mongos-router-sg
-# - UI: mongos-expres-io
+# Components:
+# - Config Server Replica Set: matterRS
+# - Shard Replica Sets: everesRS / fansipRS / fujimoRS
+# - Mongos Routers: mongos-router-dn / mongos-router-hn / mongos-router-sg
+# - Mongo Express UI: mongos-expres-io
 # =====================================================
 
 name: mongos-master
@@ -73,14 +73,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         touch /pitfall/restart-sharde-matter-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE MATTER HN (Primary bootstrap node for cluster init)
+  # SHARDE MATTER HN (Replica set member)
   # =====================================================
   sharde-matter-hn:
     container_name: ${APP_NAME}_sharde-matter-hn
@@ -111,14 +111,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
-        touch /pitfall/restart-sharde-matter-sg-done
+        touch /pitfall/restart-sharde-matter-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE MATTER SG (Primary bootstrap node for cluster init)
+  # SHARDE MATTER SG (Replica set member)
   # =====================================================
   sharde-matter-sg:
     container_name: ${APP_NAME}_sharde-matter-sg
@@ -149,7 +149,7 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         touch /pitfall/restart-sharde-matter-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
@@ -197,14 +197,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-everes-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE EVERES HN (Primary bootstrap node for cluster init)
+  # SHARDE EVERES HN (Replica set member)
   # =====================================================
   sharde-everes-hn:
     container_name: ${APP_NAME}_sharde-everes-hn
@@ -235,14 +235,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-everes-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE EVERES SG (Primary bootstrap node for cluster init)
+  # SHARDE EVERES SG (Replica set member)
   # =====================================================
   sharde-everes-sg:
     container_name: ${APP_NAME}_sharde-everes-sg
@@ -273,7 +273,7 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-everes-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
@@ -321,14 +321,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-fansip-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE FANSIP HN (Primary bootstrap node for cluster init)
+  # SHARDE FANSIP HN (Replica set member)
   # =====================================================
   sharde-fansip-hn:
     container_name: ${APP_NAME}_sharde-fansip-hn
@@ -359,14 +359,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-fansip-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE FANSIP SG (Primary bootstrap node for cluster init)
+  # SHARDE FANSIP SG (Replica set member)
   # =====================================================
   sharde-fansip-sg:
     container_name: ${APP_NAME}_sharde-fansip-sg
@@ -397,7 +397,7 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-fansip-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
@@ -445,14 +445,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-fujimo-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE FUJIMO HN (Primary bootstrap node for cluster init)
+  # SHARDE FUJIMO HN (Replica set member)
   # =====================================================
   sharde-fujimo-hn:
     container_name: ${APP_NAME}_sharde-fujimo-hn
@@ -483,14 +483,14 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-fujimo-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
       "
 
   # =====================================================
-  # SHARDE FUJIMO SG (Primary bootstrap node for cluster init)
+  # SHARDE FUJIMO SG (Replica set member)
   # =====================================================
   sharde-fujimo-sg:
     container_name: ${APP_NAME}_sharde-fujimo-sg
@@ -521,7 +521,7 @@ services:
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown
-        while pidof mongod > /dev/null; do sleep 2; done
+        while pidof mongod >/dev/null 2>&1; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         touch /pitfall/restart-sharde-fujimo-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
@@ -529,7 +529,7 @@ services:
 
 
   # =====================================================
-  # MONGO ROUTER DN (Primary bootstrap node for cluster init)
+  # MONGO ROUTER DN (Cluster bootstrap router)
   # =====================================================
   mongos-router-dn:
     container_name: ${APP_NAME}_mongos-router-dn
@@ -609,7 +609,7 @@ services:
       "
 
   # =====================================================
-  # MONGO ROUTER HN (Primary bootstrap node for cluster init)
+  # MONGO ROUTER HN (Additional mongos router)
   # =====================================================
   mongos-router-hn:
     container_name: ${APP_NAME}_mongos-router-hn
@@ -645,7 +645,7 @@ services:
         echo '--- CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-HN'
         mongos --configdb matterRS/sharde-matter-dn:27017,sharde-matter-hn:27017,sharde-matter-sg:27017 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongod.log
         until mongosh --quiet --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
-        echo '--- CONFIG-SERVER-DN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
+        echo '--- CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
 
         echo 'WAITING FOR STARTING UP SHARDE-EVERES-DN IN PROGRESS WITH AUTH'
         while [ ! -f /pitfall/restart-sharde-everes-dn-done ]; do sleep 2; done
@@ -688,7 +688,7 @@ services:
       "
 
   # =====================================================
-  # MONGO ROUTER SG (Primary bootstrap node for cluster init)
+  # MONGO ROUTER SG (Additional mongos router)
   # =====================================================
   mongos-router-sg:
     container_name: ${APP_NAME}_mongos-router-sg
