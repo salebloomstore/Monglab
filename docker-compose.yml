@@ -80,6 +80,8 @@ services:
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/sharde-matter-dn --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         touch /pitfall/restart-sharde-matter-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
       "
 
   # =====================================================
@@ -121,6 +123,8 @@ services:
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/sharde-matter-hn --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         touch /pitfall/restart-sharde-matter-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
       "
 
   # =====================================================
@@ -164,6 +168,8 @@ services:
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/sharde-matter-sg --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         touch /pitfall/restart-sharde-matter-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
       "
 
 volumes:
