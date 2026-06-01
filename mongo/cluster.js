@@ -1,9 +1,9 @@
 // =====================================================
 // ADD SHARDS TO MONGODB CLUSTER
 // =====================================================
-sh.addShard("everesRS/sharde-everes-dn:27017,sharde-everes-hn:27017,sharde-everes-sg:27017")
-sh.addShard("fansipRS/sharde-fansip-dn:27017,sharde-fansip-hn:27017,sharde-fansip-sg:27017")
-sh.addShard("fujimoRS/sharde-fujimo-dn:27017,sharde-fujimo-hn:27017,sharde-fujimo-sg:27017")
+sh.addShard("everesRS/" + process.env.SHARDE_EVERES_DN_ADRS + ":" + process.env.PORT_OF_MONGOS + "," + process.env.SHARDE_EVERES_HN_ADRS + ":" + process.env.PORT_OF_MONGOS + "," + process.env.SHARDE_EVERES_SG_ADRS + ":" + process.env.PORT_OF_MONGOS + "")
+sh.addShard("fansipRS/" + process.env.SHARDE_FANSIP_DN_ADRS + ":" + process.env.PORT_OF_MONGOS + "," + process.env.SHARDE_FANSIP_HN_ADRS + ":" + process.env.PORT_OF_MONGOS + "," + process.env.SHARDE_FANSIP_SG_ADRS + ":" + process.env.PORT_OF_MONGOS + "")
+sh.addShard("fujimoRS/" + process.env.SHARDE_FUJIMO_DN_ADRS + ":" + process.env.PORT_OF_MONGOS + "," + process.env.SHARDE_FUJIMO_HN_ADRS + ":" + process.env.PORT_OF_MONGOS + "," + process.env.SHARDE_FUJIMO_SG_ADRS + ":" + process.env.PORT_OF_MONGOS + "")
 
 // ENABLE SHARDING FOR DATABASE
 db = db.getSiblingDB("test")
