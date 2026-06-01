@@ -179,6 +179,153 @@ services:
         tail -f /tmp/mongod.log
       "
 
+  # ============================================================================================
+  # CONFIG SERVER REPLICA SET: everesRS (SHARDE EVERES)
+  # ============================================================================================
+
+  # =====================================================
+  # SHARDE EVERES DN (Primary bootstrap node for cluster init)
+  # =====================================================
+  sharde-everes-dn:
+    container_name: ${APP_NAME}_sharde-everes-dn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-everes-dn-da:/data/db
+      - sharde-everes-dn-cf:/data/configdb
+      - ./init/init-sharde-everes.js:/init/init-sharde-everes.js:ro
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_EVERES_DN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR SHARDE-EVERES-HN'
+        until mongosh --quiet --host sharde-everes-hn:27017 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'SHARDE-EVERES-HN READY'
+
+        echo 'WAITING FOR SHARDE-EVERES-SG'
+        until mongosh --quiet --host sharde-everes-sg:27017 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'SHARDE-EVERES-SG READY'
+
+        echo 'WAITING SHARDE-EVERES-DN FOR INIT'
+        mongosh --host sharde-everes-dn:27017 /init/init-sharde-everes.js
+        echo 'SHARDE-EVERES-DN INIT DONE'
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-everes-dn-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+  # =====================================================
+  # SHARDE EVERES HN (Replica set member)
+  # =====================================================
+  sharde-everes-hn:
+    container_name: ${APP_NAME}_sharde-everes-hn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-everes-hn-da:/data/db
+      - sharde-everes-hn-cf:/data/configdb
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_EVERES_HN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-EVERES-DN IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-everes-dn-done ]; do sleep 2; done
+        echo 'THE SHARDE-EVERES-DN HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-everes-hn-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+  # =====================================================
+  # SHARDE EVERES SG (Replica set member)
+  # =====================================================
+  sharde-everes-sg:
+    container_name: ${APP_NAME}_sharde-everes-sg
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-everes-sg-da:/data/db
+      - sharde-everes-sg-cf:/data/configdb
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_EVERES_SG_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-EVERES-HN IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-everes-hn-done ]; do sleep 2; done
+        echo 'THE SHARDE-EVERES-HN HAVE FINISHED BOOTING UP WITH AUTH'
+        rm -f /pitfall/restart-sharde-everes-dn-done
+        rm -f /pitfall/restart-sharde-everes-hn-done
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-everes-sg-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
 volumes:
   sharde-matter-dn-da:
   sharde-matter-dn-cf:
@@ -186,3 +333,9 @@ volumes:
   sharde-matter-hn-cf:
   sharde-matter-sg-da:
   sharde-matter-sg-cf:
+  sharde-everes-dn-da:
+  sharde-everes-dn-cf:
+  sharde-everes-hn-da:
+  sharde-everes-hn-cf:
+  sharde-everes-sg-da:
+  sharde-everes-sg-cf:
