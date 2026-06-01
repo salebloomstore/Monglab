@@ -776,7 +776,7 @@ services:
 
       echo 'mongos is ready'
 
-      /sbin/tini -- node app
+      exec node app
       "
     networks:
       - master-netwrk
