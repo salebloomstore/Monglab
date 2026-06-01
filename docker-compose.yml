@@ -83,6 +83,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
+        until mongosh --quiet --host sharde-matter-dn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-matter-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -127,6 +128,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
+        until mongosh --quiet --host sharde-matter-hn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-matter-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -173,6 +175,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
+        until mongosh --quiet --host sharde-matter-sg:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-matter-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -230,6 +233,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-everes-dn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-everes-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -274,6 +278,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-everes-hn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-everes-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -320,6 +325,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-everes-sg:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-everes-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -377,6 +383,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-fansip-dn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-fansip-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -421,6 +428,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-fansip-hn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-fansip-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -467,6 +475,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-fansip-sg:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-fansip-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -524,6 +533,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-fujimo-dn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-fujimo-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -568,6 +578,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-fujimo-hn:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-fujimo-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -614,6 +625,7 @@ services:
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        until mongosh --quiet --host sharde-fujimo-sg:27017 --eval 'db.adminCommand({ ping: 1 })' >/dev/null 2>&1; do sleep 2; done
         touch /pitfall/restart-sharde-fujimo-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
