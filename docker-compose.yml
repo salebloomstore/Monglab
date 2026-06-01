@@ -631,7 +631,7 @@ services:
         echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-DN'
-        mongos --configdb matterRS/${SHARDE_MATTER_DN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS} --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+        mongos --configdb matterRS/${SHARDE_MATTER_DN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS} --bind_ip_all --port ${PORT_OF_MONGOS} --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
         until mongosh --quiet --port ${PORT_OF_MONGOS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo 'CONFIG-SERVER-DN FOR MONGOS-ROUTER-DN CONFIGURATION COMPLETED'
 
@@ -680,7 +680,7 @@ services:
         echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-HN'
-        mongos --configdb matterRS/${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS} --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+        mongos --configdb matterRS/${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS} --bind_ip_all --port ${PORT_OF_MONGOS} --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
         until mongosh --quiet --port ${PORT_OF_MONGOS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo 'CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
 
@@ -729,7 +729,7 @@ services:
         echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-SG'
-        mongos --configdb matterRS/${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS} --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+        mongos --configdb matterRS/${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_HN_ADRS}:${PORT_OF_MONGOS},${SHARDE_MATTER_SG_ADRS}:${PORT_OF_MONGOS} --bind_ip_all --port ${PORT_OF_MONGOS} --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
         until mongosh --quiet --port ${PORT_OF_MONGOS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo 'CONFIG-SERVER-SG FOR MONGOS-ROUTER-SG CONFIGURATION COMPLETED'
 
