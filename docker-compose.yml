@@ -620,6 +620,194 @@ services:
         tail -f /tmp/mongod.log
       "
 
+  # ============================================================================================
+  # CONFIG MONGOS ROUTER
+  # ============================================================================================
+
+  # =====================================================
+  # MONGO ROUTER DN (Cluster bootstrap router)
+  # =====================================================
+  mongos-router-dn:
+    container_name: ${APP_NAME}_mongos-router-dn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - ./mongo/cluster.js:/mongo/cluster.js:ro
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${MONGOS_ROUTER_DN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-matter-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-DN'
+        mongos --configdb matterRS/sharde-matter-dn:27017,sharde-matter-hn:27017,sharde-matter-sg:27017 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        echo 'CONFIG-SERVER-DN FOR MONGOS-ROUTER-DN CONFIGURATION COMPLETED'
+
+        echo 'WAITING FOR STARTING UP SHARDE-EVERES-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-everes-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-EVERES-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FANSIP-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fansip-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-FANSIP-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fujimo-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-DN IN PROGRESS WITH AUTH'
+        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js
+
+        rm -f /pitfall/restart-sharde-fujimo-sg-done
+
+        tail -f /tmp/mongos.log
+      "
+
+  # =====================================================
+  # MONGO ROUTER HN (Cluster bootstrap router)
+  # =====================================================
+  mongos-router-hn:
+    container_name: ${APP_NAME}_mongos-router-hn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${MONGOS_ROUTER_HN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-matter-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-HN'
+        mongos --configdb matterRS/sharde-matter-hn:27017,sharde-matter-hn:27017,sharde-matter-sg:27017 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+        until mongosh --quiet --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        echo 'CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
+
+        echo 'WAITING FOR STARTING UP SHARDE-EVERES-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-everes-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-EVERES-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FANSIP-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fansip-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-FANSIP-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fujimo-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS WITH AUTH'
+        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
+
+        rm -f /pitfall/restart-sharde-fujimo-sg-done
+
+        tail -f /tmp/mongos.log
+      "
+
+  # =====================================================
+  # MONGO ROUTER SG (Cluster bootstrap router)
+  # =====================================================
+  mongos-router-sg:
+    container_name: ${APP_NAME}_mongos-router-sg
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${MONGOS_ROUTER_SG_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-matter-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-SG'
+        mongos --configdb matterRS/sharde-matter-sg:27017,sharde-matter-hn:27017,sharde-matter-sg:27017 --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
+        until mongosh --quiet --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        echo 'CONFIG-SERVER-SG FOR MONGOS-ROUTER-SG CONFIGURATION COMPLETED'
+
+        echo 'WAITING FOR STARTING UP SHARDE-EVERES-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-everes-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-EVERES-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FANSIP-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fansip-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-FANSIP-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fujimo-sg-done ]; do sleep 2; done
+        echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS WITH AUTH'
+        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
+
+        rm -f /pitfall/restart-sharde-fujimo-sg-done
+
+        tail -f /tmp/mongos.log
+      "
+
+  # ============================================================================================
+  # MONGO EXPRESS UI
+  # ============================================================================================
+  mongos-expres-io:
+    container_name: ${APP_NAME}_mongos-expres-io
+    image: *mongo-express-image
+    depends_on:
+      - mongos-router-dn
+      - mongos-router-hn
+      - mongos-router-sg
+    env_file: .env
+    ports:
+      - ${MONGOS_EXPRES_IO_PORT}:8081
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMINIST_SHARDE_MATTER}:${MONGO_PASSWORD_SHARDE_MATTER}@mongos-router-dn:27017,mongos-router-hn:27017,mongos-router-sg:27017/admin?authSource=admin
+      ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_ADMIN}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
+    command: |
+      bash -c "
+      echo 'Waiting for mongos startup...'
+      until nc -z mongos-router-dn 27017; do sleep 2; done
+      until nc -z mongos-router-hn 27017; do sleep 2; done
+      until nc -z mongos-router-sg 27017; do sleep 2; done
+      echo 'mongos is ready'
+      /sbin/tini -- node app
+      "
+    networks:
+      - master-netwrk
+
 volumes:
   sharde-matter-dn-da:
   sharde-matter-dn-cf:
