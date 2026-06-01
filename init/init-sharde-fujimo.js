@@ -7,17 +7,17 @@ rs.initiate({
   members: [
     {
       _id: 0,
-      host: "sharde-fujimo-dn:27017",
+      host: process.env.SHARDE_FUJIMO_DN_ADRS + ":" + process.env.PORT_OF_MONGOS,
       priority: 2
     },
     {
       _id: 1,
-      host: "sharde-fujimo-hn:27017",
+      host: process.env.SHARDE_FUJIMO_HN_ADRS + ":" + process.env.PORT_OF_MONGOS,
       priority: 1
     },
     {
       _id: 2,
-      host: "sharde-fujimo-sg:27017",
+      host: process.env.SHARDE_FUJIMO_SG_ADRS + ":" + process.env.PORT_OF_MONGOS,
       priority: 1
     }
   ]

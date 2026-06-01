@@ -7,17 +7,17 @@ rs.initiate({
   members: [
     {
       _id: 0,
-      host: "sharde-matter-dn:27017",
+      host: process.env.SHARDE_MATTER_DN_ADRS + ":" + process.env.PORT_OF_MONGOS,
       priority: 2
     },
     {
       _id: 1,
-      host: "sharde-matter-hn:27017",
+      host: process.env.SHARDE_MATTER_HN_ADRS + ":" + process.env.PORT_OF_MONGOS,
       priority: 1
     },
     {
       _id: 2,
-      host: "sharde-matter-sg:27017",
+      host: process.env.SHARDE_MATTER_SG_ADRS + ":" + process.env.PORT_OF_MONGOS,
       priority: 1
     }
   ]
