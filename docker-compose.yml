@@ -326,6 +326,153 @@ services:
         tail -f /tmp/mongod.log
       "
 
+  # ============================================================================================
+  # CONFIG SERVER REPLICA SET: fansipRS (SHARDE FANSIP)
+  # ============================================================================================
+
+  # =====================================================
+  # SHARDE FANSIP DN (Primary bootstrap node for cluster init)
+  # =====================================================
+  sharde-fansip-dn:
+    container_name: ${APP_NAME}_sharde-fansip-dn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-fansip-dn-da:/data/db
+      - sharde-fansip-dn-cf:/data/configdb
+      - ./init/init-sharde-fansip.js:/init/init-sharde-fansip.js:ro
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_FANSIP_DN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR SHARDE-FANSIP-HN'
+        until mongosh --quiet --host sharde-fansip-hn:27017 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'SHARDE-FANSIP-HN READY'
+
+        echo 'WAITING FOR SHARDE-FANSIP-SG'
+        until mongosh --quiet --host sharde-fansip-sg:27017 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'SHARDE-FANSIP-SG READY'
+
+        echo 'WAITING SHARDE-FANSIP-DN FOR INIT'
+        mongosh --host sharde-fansip-dn:27017 /init/init-sharde-fansip.js
+        echo 'SHARDE-FANSIP-DN INIT DONE'
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-fansip-dn-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+  # =====================================================
+  # SHARDE FANSIP HN (Replica set member)
+  # =====================================================
+  sharde-fansip-hn:
+    container_name: ${APP_NAME}_sharde-fansip-hn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-fansip-hn-da:/data/db
+      - sharde-fansip-hn-cf:/data/configdb
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_FANSIP_HN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FANSIP-DN IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fansip-dn-done ]; do sleep 2; done
+        echo 'THE SHARDE-FANSIP-DN HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-fansip-hn-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+  # =====================================================
+  # SHARDE FANSIP SG (Replica set member)
+  # =====================================================
+  sharde-fansip-sg:
+    container_name: ${APP_NAME}_sharde-fansip-sg
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-fansip-sg-da:/data/db
+      - sharde-fansip-sg-cf:/data/configdb
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_FANSIP_SG_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FANSIP-HN IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fansip-hn-done ]; do sleep 2; done
+        echo 'THE SHARDE-FANSIP-HN HAVE FINISHED BOOTING UP WITH AUTH'
+        rm -f /pitfall/restart-sharde-fansip-dn-done
+        rm -f /pitfall/restart-sharde-fansip-hn-done
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-fansip-sg-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
 volumes:
   sharde-matter-dn-da:
   sharde-matter-dn-cf:
@@ -339,3 +486,9 @@ volumes:
   sharde-everes-hn-cf:
   sharde-everes-sg-da:
   sharde-everes-sg-cf:
+  sharde-fansip-dn-da:
+  sharde-fansip-dn-cf:
+  sharde-fansip-hn-da:
+  sharde-fansip-hn-cf:
+  sharde-fansip-sg-da:
+  sharde-fansip-sg-cf:
