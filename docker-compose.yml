@@ -91,6 +91,7 @@ services:
     volumes:
       - ./keyfile:/etc
       - sharde-matter-hn:/data
+      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_MATTER_HN_PORT}:27017
@@ -131,6 +132,7 @@ services:
     volumes:
       - ./keyfile:/etc
       - sharde-matter-sg:/data
+      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_MATTER_SG_PORT}:27017
@@ -165,6 +167,6 @@ services:
       "
 
 volumes:
-  portai-master-dn:
-  portai-master-hn:
-  portai-master-sg:
+  sharde-matter-dn:
+  sharde-matter-hn:
+  sharde-matter-sg:
