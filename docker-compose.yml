@@ -473,6 +473,153 @@ services:
         tail -f /tmp/mongod.log
       "
 
+  # ============================================================================================
+  # CONFIG SERVER REPLICA SET: fujimoRS (SHARDE FUJIMO)
+  # ============================================================================================
+
+  # =====================================================
+  # SHARDE FUJIMO DN (Primary bootstrap node for cluster init)
+  # =====================================================
+  sharde-fujimo-dn:
+    container_name: ${APP_NAME}_sharde-fujimo-dn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-fujimo-dn-da:/data/db
+      - sharde-fujimo-dn-cf:/data/configdb
+      - ./init/init-sharde-fujimo.js:/init/init-sharde-fujimo.js:ro
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_FUJIMO_DN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR SHARDE-FUJIMO-HN'
+        until mongosh --quiet --host sharde-fujimo-hn:27017 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'SHARDE-FUJIMO-HN READY'
+
+        echo 'WAITING FOR SHARDE-FUJIMO-SG'
+        until mongosh --quiet --host sharde-fujimo-sg:27017 --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'SHARDE-FUJIMO-SG READY'
+
+        echo 'WAITING SHARDE-FUJIMO-DN FOR INIT'
+        mongosh --host sharde-fujimo-dn:27017 /init/init-sharde-fujimo.js
+        echo 'SHARDE-FUJIMO-DN INIT DONE'
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-fujimo-dn-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+  # =====================================================
+  # SHARDE FUJIMO HN (Replica set member)
+  # =====================================================
+  sharde-fujimo-hn:
+    container_name: ${APP_NAME}_sharde-fujimo-hn
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-fujimo-hn-da:/data/db
+      - sharde-fujimo-hn-cf:/data/configdb
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_FUJIMO_HN_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-DN IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fujimo-dn-done ]; do sleep 2; done
+        echo 'THE SHARDE-FUJIMO-DN HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-fujimo-hn-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+  # =====================================================
+  # SHARDE FUJIMO SG (Replica set member)
+  # =====================================================
+  sharde-fujimo-sg:
+    container_name: ${APP_NAME}_sharde-fujimo-sg
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-fujimo-sg-da:/data/db
+      - sharde-fujimo-sg-cf:/data/configdb
+      - ./pitfall:/pitfall
+    env_file: .env
+    ports:
+      - ${SHARDE_FUJIMO_SG_PORT}:27017
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP NODE IN PROGRESS WITH NO AUTH'
+        mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-HN IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/restart-sharde-fujimo-hn-done ]; do sleep 2; done
+        echo 'THE SHARDE-FUJIMO-HN HAVE FINISHED BOOTING UP WITH AUTH'
+        rm -f /pitfall/restart-sharde-fujimo-dn-done
+        rm -f /pitfall/restart-sharde-fujimo-hn-done
+
+        echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        touch /pitfall/restart-sharde-fujimo-sg-done
+        echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
 volumes:
   sharde-matter-dn-da:
   sharde-matter-dn-cf:
@@ -492,3 +639,9 @@ volumes:
   sharde-fansip-hn-cf:
   sharde-fansip-sg-da:
   sharde-fansip-sg-cf:
+  sharde-fujimo-dn-da:
+  sharde-fujimo-dn-cf:
+  sharde-fujimo-hn-da:
+  sharde-fujimo-hn-cf:
+  sharde-fujimo-sg-da:
+  sharde-fujimo-sg-cf:
