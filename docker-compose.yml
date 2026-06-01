@@ -671,7 +671,20 @@ services:
         echo 'WAITING FOR STARTING UP MONGOS-ROUTER-DN IN PROGRESS WITH AUTH'
         mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js
 
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS'
+        while [ ! -f /pitfall/mongos-router-hn-ready ]; do sleep 2; done
+        echo 'THE MONGOS-ROUTER-HN HAVE FINISHED BOOTING UP'
+
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS WITH AUTH'
+        while [ ! -f /pitfall/mongos-router-sg-ready ]; do sleep 2; done
+        echo 'THE MONGOS-ROUTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        rm -f /pitfall/restart-sharde-matter-sg-done
+        rm -f /pitfall/restart-sharde-everes-sg-done
+        rm -f /pitfall/restart-sharde-fansip-sg-done
         rm -f /pitfall/restart-sharde-fujimo-sg-done
+        rm -f /pitfall/mongos-router-hn-ready
+        rm -f /pitfall/mongos-router-sg-ready
 
         tail -f /tmp/mongos.log
       "
@@ -722,7 +735,7 @@ services:
         echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS WITH AUTH'
         mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
 
-        rm -f /pitfall/restart-sharde-fujimo-sg-done
+        touch /pitfall/mongos-router-hn-ready
 
         tail -f /tmp/mongos.log
       "
@@ -773,7 +786,7 @@ services:
         echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS WITH AUTH'
         mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
 
-        rm -f /pitfall/restart-sharde-fujimo-sg-done
+        touch /pitfall/mongos-router-sg-ready
 
         tail -f /tmp/mongos.log
       "
