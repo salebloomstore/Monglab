@@ -47,7 +47,6 @@ services:
       - sharde-matter-dn-da:/data/db
       - sharde-matter-dn-cf:/data/configdb
       - ./init/init-sharde-matter.js:/init/init-sharde-matter.js:ro
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_MATTER_DN_PORT}:27017
@@ -84,7 +83,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         until mongosh --quiet --host ${SHARDE_MATTER_DN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-matter-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -100,7 +98,6 @@ services:
       - ./keyfile:/etc
       - sharde-matter-hn-da:/data/db
       - sharde-matter-hn-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_MATTER_HN_PORT}:27017
@@ -121,7 +118,7 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-MATTER-DN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-matter-dn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_MATTER_DN_ADRS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-MATTER-DN HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
@@ -129,7 +126,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         until mongosh --quiet --host ${SHARDE_MATTER_HN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-matter-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -145,7 +141,6 @@ services:
       - ./keyfile:/etc
       - sharde-matter-sg-da:/data/db
       - sharde-matter-sg-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_MATTER_SG_PORT}:27017
@@ -166,17 +161,14 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-MATTER-HN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-matter-hn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_MATTER_HN_ADRS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-MATTER-HN HAVE FINISHED BOOTING UP WITH AUTH'
-        rm -f /pitfall/restart-sharde-matter-dn-done
-        rm -f /pitfall/restart-sharde-matter-hn-done
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet matterRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
         until mongosh --quiet --host ${SHARDE_MATTER_SG_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-matter-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -197,7 +189,6 @@ services:
       - sharde-everes-dn-da:/data/db
       - sharde-everes-dn-cf:/data/configdb
       - ./init/init-sharde-everes.js:/init/init-sharde-everes.js:ro
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_EVERES_DN_PORT}:27017
@@ -234,7 +225,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_EVERES_DN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-everes-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -250,7 +240,6 @@ services:
       - ./keyfile:/etc
       - sharde-everes-hn-da:/data/db
       - sharde-everes-hn-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_EVERES_HN_PORT}:27017
@@ -271,7 +260,7 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-EVERES-DN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-everes-dn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_EVERES_DN_ADRS} -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-EVERES-DN HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
@@ -279,7 +268,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_EVERES_HN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-everes-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -295,7 +283,6 @@ services:
       - ./keyfile:/etc
       - sharde-everes-sg-da:/data/db
       - sharde-everes-sg-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_EVERES_SG_PORT}:27017
@@ -316,17 +303,14 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-EVERES-HN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-everes-hn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_EVERES_HN_ADRS} -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-EVERES-HN HAVE FINISHED BOOTING UP WITH AUTH'
-        rm -f /pitfall/restart-sharde-everes-dn-done
-        rm -f /pitfall/restart-sharde-everes-hn-done
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet everesRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_EVERES_SG_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-everes-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -347,7 +331,6 @@ services:
       - sharde-fansip-dn-da:/data/db
       - sharde-fansip-dn-cf:/data/configdb
       - ./init/init-sharde-fansip.js:/init/init-sharde-fansip.js:ro
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_FANSIP_DN_PORT}:27017
@@ -384,7 +367,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FANSIP_DN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-fansip-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -400,7 +382,6 @@ services:
       - ./keyfile:/etc
       - sharde-fansip-hn-da:/data/db
       - sharde-fansip-hn-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_FANSIP_HN_PORT}:27017
@@ -421,7 +402,7 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FANSIP-DN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fansip-dn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FANSIP_DN_ADRS} -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FANSIP-DN HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
@@ -429,7 +410,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FANSIP_HN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-fansip-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -445,7 +425,6 @@ services:
       - ./keyfile:/etc
       - sharde-fansip-sg-da:/data/db
       - sharde-fansip-sg-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_FANSIP_SG_PORT}:27017
@@ -466,17 +445,14 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FANSIP-HN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fansip-hn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FANSIP_HN_ADRS} -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FANSIP-HN HAVE FINISHED BOOTING UP WITH AUTH'
-        rm -f /pitfall/restart-sharde-fansip-dn-done
-        rm -f /pitfall/restart-sharde-fansip-hn-done
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fansipRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FANSIP_SG_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-fansip-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -497,7 +473,6 @@ services:
       - sharde-fujimo-dn-da:/data/db
       - sharde-fujimo-dn-cf:/data/configdb
       - ./init/init-sharde-fujimo.js:/init/init-sharde-fujimo.js:ro
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_FUJIMO_DN_PORT}:27017
@@ -534,7 +509,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FUJIMO_DN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-fujimo-dn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -550,7 +524,6 @@ services:
       - ./keyfile:/etc
       - sharde-fujimo-hn-da:/data/db
       - sharde-fujimo-hn-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_FUJIMO_HN_PORT}:27017
@@ -571,7 +544,7 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-DN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fujimo-dn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FUJIMO_DN_ADRS} -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FUJIMO-DN HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
@@ -579,7 +552,6 @@ services:
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FUJIMO_HN_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-fujimo-hn-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -595,7 +567,6 @@ services:
       - ./keyfile:/etc
       - sharde-fujimo-sg-da:/data/db
       - sharde-fujimo-sg-cf:/data/configdb
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${SHARDE_FUJIMO_SG_PORT}:27017
@@ -616,17 +587,14 @@ services:
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-HN IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fujimo-hn-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FIJIMO_HN_ADRS} -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FUJIMO-HN HAVE FINISHED BOOTING UP WITH AUTH'
-        rm -f /pitfall/restart-sharde-fujimo-dn-done
-        rm -f /pitfall/restart-sharde-fujimo-hn-done
 
         echo 'WAITING FOR STARTING UP NODE IN PROGRESS WITH AUTH'
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
         mongod --replSet fujimoRS --bind_ip_all --port 27017 --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FUJIMO_SG_ADRS} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
-        touch /pitfall/restart-sharde-fujimo-sg-done
         echo 'THE NODE HAVE FINISHED BOOTING UP WITH AUTH'
 
         tail -f /tmp/mongod.log
@@ -645,7 +613,6 @@ services:
     volumes:
       - ./keyfile:/etc
       - ./mongo/cluster.js:/mongo/cluster.js:ro
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${MONGOS_ROUTER_DN_PORT}:27017
@@ -660,43 +627,29 @@ services:
         echo 'KEYFILE CREATED'
 
         echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-matter-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_MATTER_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-DN'
         mongos --configdb matterRS/${SHARDE_MATTER_DN_ADRS},${SHARDE_MATTER_HN_ADRS},${SHARDE_MATTER_SG_ADRS} --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-        until mongosh --quiet --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        until mongosh --quiet --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo 'CONFIG-SERVER-DN FOR MONGOS-ROUTER-DN CONFIGURATION COMPLETED'
 
         echo 'WAITING FOR STARTING UP SHARDE-EVERES-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-everes-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_EVERES_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-EVERES-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FANSIP-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fansip-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FANSIP_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FANSIP-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fujimo-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FUJIMO_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
-        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-DN IN PROGRESS WITH AUTH'
-        mongosh --host mongos-router-dn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js
-
-        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS'
-        while [ ! -f /pitfall/mongos-router-hn-ready ]; do sleep 2; done
-        echo 'THE MONGOS-ROUTER-HN HAVE FINISHED BOOTING UP'
-
-        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/mongos-router-sg-ready ]; do sleep 2; done
-        echo 'THE MONGOS-ROUTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
-
-        rm -f /pitfall/restart-sharde-matter-sg-done
-        rm -f /pitfall/restart-sharde-everes-sg-done
-        rm -f /pitfall/restart-sharde-fansip-sg-done
-        rm -f /pitfall/restart-sharde-fujimo-sg-done
-        rm -f /pitfall/mongos-router-hn-ready
-        rm -f /pitfall/mongos-router-sg-ready
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-DN IN PROGRESS'
+        mongosh --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin /mongo/cluster.js
+        echo 'THE MONGOS-ROUTER-DN HAVE FINISHED BOOTING UP'
 
         tail -f /tmp/mongos.log
       "
@@ -709,7 +662,6 @@ services:
     image: *mongo-image
     volumes:
       - ./keyfile:/etc
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${MONGOS_ROUTER_HN_PORT}:27017
@@ -724,30 +676,29 @@ services:
         echo 'KEYFILE CREATED'
 
         echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-matter-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_MATTER_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-HN'
         mongos --configdb matterRS/${SHARDE_MATTER_HN_ADRS},${SHARDE_MATTER_HN_ADRS},${SHARDE_MATTER_SG_ADRS} --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-        until mongosh --quiet --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        until mongosh --quiet --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo 'CONFIG-SERVER-HN FOR MONGOS-ROUTER-HN CONFIGURATION COMPLETED'
 
         echo 'WAITING FOR STARTING UP SHARDE-EVERES-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-everes-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_EVERES_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-EVERES-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FANSIP-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fansip-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FANSIP_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FANSIP-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fujimo-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FUJIMO_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
-        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS WITH AUTH'
-        mongosh --host mongos-router-hn --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
-
-        touch /pitfall/mongos-router-hn-ready
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-HN IN PROGRESS'
+        mongosh --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
+        echo 'THE MONGOS-ROUTER-HN HAVE FINISHED BOOTING UP'
 
         tail -f /tmp/mongos.log
       "
@@ -760,7 +711,6 @@ services:
     image: *mongo-image
     volumes:
       - ./keyfile:/etc
-      - ./pitfall:/pitfall
     env_file: .env
     ports:
       - ${MONGOS_ROUTER_SG_PORT}:27017
@@ -775,30 +725,29 @@ services:
         echo 'KEYFILE CREATED'
 
         echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-matter-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_MATTER_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'CONFIGURATING CONFIG SERVER FOR MONGOS-ROUTER-SG'
         mongos --configdb matterRS/${SHARDE_MATTER_SG_ADRS},${SHARDE_MATTER_HN_ADRS},${SHARDE_MATTER_SG_ADRS} --bind_ip_all --keyFile /etc/mongo-keyfile --fork --logpath /tmp/mongos.log
-        until mongosh --quiet --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
+        until mongosh --quiet --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 }).ok' | grep 1 > /dev/null; do sleep 2; done
         echo 'CONFIG-SERVER-SG FOR MONGOS-ROUTER-SG CONFIGURATION COMPLETED'
 
         echo 'WAITING FOR STARTING UP SHARDE-EVERES-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-everes-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_EVERES_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_EVERES} -p ${MONGO_PASSWORD_SHARDE_EVERES} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-EVERES-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FANSIP-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fansip-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FANSIP_DN_ADRS} -u ${MONGO_ADMINIST_SHARDE_FANSIP} -p ${MONGO_PASSWORD_SHARDE_FANSIP} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FANSIP-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
         echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-SG IN PROGRESS WITH AUTH'
-        while [ ! -f /pitfall/restart-sharde-fujimo-sg-done ]; do sleep 2; done
+        until mongosh --quiet --host ${SHARDE_FUJIMO_SG_ADRS} -u ${MONGO_ADMINIST_SHARDE_FUJIMO} -p ${MONGO_PASSWORD_SHARDE_FUJIMO} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FUJIMO-SG HAVE FINISHED BOOTING UP WITH AUTH'
 
-        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS WITH AUTH'
-        mongosh --host mongos-router-sg --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
-
-        touch /pitfall/mongos-router-sg-ready
+        echo 'WAITING FOR STARTING UP MONGOS-ROUTER-SG IN PROGRESS'
+        mongosh --port 27017 -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin
+        echo 'THE MONGOS-ROUTER-SG HAVE FINISHED BOOTING UP'
 
         tail -f /tmp/mongos.log
       "
