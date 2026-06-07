@@ -612,6 +612,8 @@ services:
     image: *mongo-image
     volumes:
       - ./keyfile:/etc
+      - mongos-router-dn-da:/data/db
+      - mongos-router-dn-cf:/data/configdb
       - ./mongo/cluster.js:/mongo/cluster.js:ro
     env_file: .env
     ports:
@@ -662,6 +664,8 @@ services:
     image: *mongo-image
     volumes:
       - ./keyfile:/etc
+      - mongos-router-hn-da:/data/db
+      - mongos-router-hn-cf:/data/configdb
     env_file: .env
     ports:
       - ${MONGOS_ROUTER_HN_PORT}:${PORT_OF_MONGOS}
@@ -711,6 +715,8 @@ services:
     image: *mongo-image
     volumes:
       - ./keyfile:/etc
+      - mongos-router-sg-da:/data/db
+      - mongos-router-sg-cf:/data/configdb
     env_file: .env
     ports:
       - ${MONGOS_ROUTER_SG_PORT}:${PORT_OF_MONGOS}
@@ -807,3 +813,9 @@ volumes:
   sharde-fujimo-hn-cf:
   sharde-fujimo-sg-da:
   sharde-fujimo-sg-cf:
+  mongos-router-dn-da:
+  mongos-router-dn-cf:
+  mongos-router-hn-da:
+  mongos-router-hn-cf:
+  mongos-router-sg-da:
+  mongos-router-sg-cf:
