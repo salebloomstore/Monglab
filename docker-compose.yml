@@ -24,7 +24,6 @@ services:
   keygen:
     build: keygen
     container_name: ${APP_NAME}_keygen-suicid-cr
-    image: *mongo-image
     volumes:
       - ./keyfile:/keyfile
       - ./keygen:/keygen
