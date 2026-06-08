@@ -19,6 +19,4 @@ chmod 400 /keyfile/mongo-keyfile
 
 echo "KEYFILE CREATED"
 
-apt-get update && apt-get install -y docker.io
-
 docker rm -fv $(hostname)
