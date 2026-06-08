@@ -22,8 +22,8 @@ services:
   # KEYFILE GENERATOR (used for MongoDB auth replication)
   # =====================================================
   keygen:
-    build: keygen
     container_name: ${APP_NAME}_keygen-suicid-cr
+    build: keygen
     volumes:
       - ./keyfile:/keyfile
       - ./keygen:/keygen
