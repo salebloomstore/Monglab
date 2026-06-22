@@ -37,4 +37,12 @@ chmod +x restart-sharde-everes-dn.sh && sudo ./restart-sharde-everes-dn.sh
 chmod +x restart-sharde-everes-hn.sh && sudo ./restart-sharde-everes-hn.sh
 chmod +x restart-sharde-everes-sg.sh && sudo ./restart-sharde-everes-sg.sh
 
+chmod +x restart-sharde-fansip-dn.sh && sudo ./restart-sharde-fansip-dn.sh
+chmod +x restart-sharde-fansip-hn.sh && sudo ./restart-sharde-fansip-hn.sh
+chmod +x restart-sharde-fansip-sg.sh && sudo ./restart-sharde-fansip-sg.sh
+
+chmod +x restart-sharde-fujimo-dn.sh && sudo ./restart-sharde-fujimo-dn.sh
+chmod +x restart-sharde-fujimo-hn.sh && sudo ./restart-sharde-fujimo-hn.sh
+chmod +x restart-sharde-fujimo-sg.sh && sudo ./restart-sharde-fujimo-sg.sh
+
 echo "Master restarted successfully!"

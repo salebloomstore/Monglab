@@ -35,4 +35,12 @@ chmod +x start-sharde-everes-dn.sh && sudo ./start-sharde-everes-dn.sh
 chmod +x start-sharde-everes-hn.sh && sudo ./start-sharde-everes-hn.sh
 chmod +x start-sharde-everes-sg.sh && sudo ./start-sharde-everes-sg.sh
 
+chmod +x start-sharde-fansip-dn.sh && sudo ./start-sharde-fansip-dn.sh
+chmod +x start-sharde-fansip-hn.sh && sudo ./start-sharde-fansip-hn.sh
+chmod +x start-sharde-fansip-sg.sh && sudo ./start-sharde-fansip-sg.sh
+
+chmod +x start-sharde-fujimo-dn.sh && sudo ./start-sharde-fujimo-dn.sh
+chmod +x start-sharde-fujimo-hn.sh && sudo ./start-sharde-fujimo-hn.sh
+chmod +x start-sharde-fujimo-sg.sh && sudo ./start-sharde-fujimo-sg.sh
+
 echo "Master started successfully!"
