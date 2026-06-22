@@ -4,24 +4,24 @@ set -e
 
 find . -type f -name "*.sh" -exec chmod +x {} \;
 
-SOURCE="/keygen/keyfile/mongo-keyfile"
+SOURCE="keygen/keyfile/mongo-keyfile"
 
 for DIR in \
-    /mongos-router-dn \
-    /mongos-router-hn \
-    /mongos-router-sg \
-    /sharde-everes-dn \
-    /sharde-everes-hn \
-    /sharde-everes-sg \
-    /sharde-fansip-dn \
-    /sharde-fansip-hn \
-    /sharde-fansip-sg \
-    /sharde-fujimo-dn \
-    /sharde-fujimo-hn \
-    /sharde-fujimo-sg \
-    /sharde-matter-dn \
-    /sharde-matter-hn \
-    /sharde-matter-sg
+    mongos-router-dn \
+    mongos-router-hn \
+    mongos-router-sg \
+    sharde-everes-dn \
+    sharde-everes-hn \
+    sharde-everes-sg \
+    sharde-fansip-dn \
+    sharde-fansip-hn \
+    sharde-fansip-sg \
+    sharde-fujimo-dn \
+    sharde-fujimo-hn \
+    sharde-fujimo-sg \
+    sharde-matter-dn \
+    sharde-matter-hn \
+    sharde-matter-sg
 do
     TARGET="$DIR/keyfile/mongo-keyfile"
 
