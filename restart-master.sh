@@ -35,6 +35,4 @@ chmod +x restart-sharde-everes-dn.sh && sudo ./restart-sharde-everes-dn.sh
 chmod +x restart-sharde-everes-hn.sh && sudo ./restart-sharde-everes-hn.sh
 chmod +x restart-sharde-everes-sg.sh && sudo ./restart-sharde-everes-sg.sh
 
-# sudo chown 1000:1000 -R . && sudo chmod 777 -R .
-
 echo "Master restarted successfully!"
