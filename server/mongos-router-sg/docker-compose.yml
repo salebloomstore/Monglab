@@ -16,7 +16,7 @@ services:
       - mongos-router-sg-cf:/data/configdb
     env_file: ../../.env
     ports:
-      - ${MONGOS-ROUTER_SG_PORT}:${MONGOS-ROUTER_SG_PORT_OF}
+      - ${MONGOS_ROUTER_SG_PORT}:${MONGOS_ROUTER_SG_PORT_OF}
     networks:
       - master-netwrk
     command: |

@@ -16,7 +16,7 @@ services:
       - mongos-router-hn-cf:/data/configdb
     env_file: ../../.env
     ports:
-      - ${MONGOS-ROUTER_HN_PORT}:${MONGOS-ROUTER_HN_PORT_OF}
+      - ${MONGOS_ROUTER_HN_PORT}:${MONGOS_ROUTER_HN_PORT_OF}
     networks:
       - master-netwrk
     command: |
