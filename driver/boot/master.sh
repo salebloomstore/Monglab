@@ -30,17 +30,17 @@ do
     chown 999:999 "$TARGET"
     chmod 400 "$TARGET"
 done
+ls
+chmod +x driver/boot/sharde-everes-dn.sh && sudo ./driver/boot/sharde-everes-dn.sh
+chmod +x driver/boot/sharde-everes-hn.sh && sudo ./driver/boot/sharde-everes-hn.sh
+chmod +x driver/boot/sharde-everes-sg.sh && sudo ./driver/boot/sharde-everes-sg.sh
 
-chmod +x driver/sharde-everes-dn.sh && sudo ./driver/sharde-everes-dn.sh
-chmod +x driver/sharde-everes-hn.sh && sudo ./driver/sharde-everes-hn.sh
-chmod +x driver/sharde-everes-sg.sh && sudo ./driver/sharde-everes-sg.sh
+chmod +x driver/boot/sharde-fansip-dn.sh && sudo ./driver/boot/sharde-fansip-dn.sh
+chmod +x driver/boot/sharde-fansip-hn.sh && sudo ./driver/boot/sharde-fansip-hn.sh
+chmod +x driver/boot/sharde-fansip-sg.sh && sudo ./driver/boot/sharde-fansip-sg.sh
 
-chmod +x driver/sharde-fansip-dn.sh && sudo ./driver/sharde-fansip-dn.sh
-chmod +x driver/sharde-fansip-hn.sh && sudo ./driver/sharde-fansip-hn.sh
-chmod +x driver/sharde-fansip-sg.sh && sudo ./driver/sharde-fansip-sg.sh
-
-chmod +x driver/sharde-fujimo-dn.sh && sudo ./driver/sharde-fujimo-dn.sh
-chmod +x driver/sharde-fujimo-hn.sh && sudo ./driver/sharde-fujimo-hn.sh
-chmod +x driver/sharde-fujimo-sg.sh && sudo ./driver/sharde-fujimo-sg.sh
+chmod +x driver/boot/sharde-fujimo-dn.sh && sudo ./driver/boot/sharde-fujimo-dn.sh
+chmod +x driver/boot/sharde-fujimo-hn.sh && sudo ./driver/boot/sharde-fujimo-hn.sh
+chmod +x driver/boot/sharde-fujimo-sg.sh && sudo ./driver/boot/sharde-fujimo-sg.sh
 
 echo "Master boot successfully!"
