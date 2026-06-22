@@ -16,6 +16,4 @@ chmod +x down-sharde-fujimo-dn.sh && sudo ./down-sharde-fujimo-dn.sh
 chmod +x down-sharde-fujimo-hn.sh && sudo ./down-sharde-fujimo-hn.sh
 chmod +x down-sharde-fujimo-sg.sh && sudo ./down-sharde-fujimo-sg.sh
 
-sudo chown 1000:1000 -R . && sudo chmod 777 -R .
-
 echo "Master downed successfully!"
