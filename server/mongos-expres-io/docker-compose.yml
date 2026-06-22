@@ -9,8 +9,8 @@ networks:
 services:
   mongos-expres-io:
     container_name: ${APP_NAME}_mongos-expres-io
-    image: *x-mongo-express-image
-    env_file: .env
+    image: *mongo-express-image
+    env_file: ../../.env
     ports:
       - ${MONGOS_EXPRES_IO_PORT}:${MONGOS_EXPRES_IO_PORT_OF}
     restart: always
