@@ -1,11 +1,11 @@
-name: mongos-master
+name: keygen-suicid-cr
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  keygen:
+  keygen-suicid-cr:
     container_name: ${APP_NAME}_keygen-suicid-cr
     build: .
     volumes:
