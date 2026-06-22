@@ -7,14 +7,14 @@ networks:
     external: true
 
 services:
-  sharde-everes-dn:
-    container_name: ${APP_NAME}_sharde-everes-dn
+  sharde-fujimo-dn:
+    container_name: ${APP_NAME}_sharde-fujimo-dn
     image: *mongo-image
     volumes:
       - ./keyfile:/etc
-      - sharde-everes-dn-da:/data/db
-      - sharde-everes-dn-cf:/data/configdb
-      - ./init/init-sharde-everes.js:/init/init-sharde-everes.js:ro
+      - sharde-fujimo-dn-da:/data/db
+      - sharde-fujimo-dn-cf:/data/configdb
+      - ./init/init-sharde-fujimo.js:/init/init-sharde-fujimo.js:ro
     env_file: ../.env
     ports:
       - ${SHARDE_FUJIMO_DN_PORT}:${SHARDE_FUJIMO_DN_PORT_OF}
@@ -31,7 +31,7 @@ services:
         mkdir -p /data/db
 
         echo 'STARTING UP SHARDE-FUJIMO-DN IN PROGRESS WITH NO AUTH'
-        mongod --replSet everesRS --bind_ip_all --port ${SHARDE_FUJIMO_DN_PORT_OF} --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
+        mongod --replSet fujimoRS --bind_ip_all --port ${SHARDE_FUJIMO_DN_PORT_OF} --dbpath /data/db --fork --logpath /tmp/mongod.log --shardsvr
         echo 'THE SHARDE-FUJIMO-DN HAVE FINISHED BOOTING UP WITH NO AUTH'
 
         echo 'WAITING FOR SHARDE-FUJIMO-HN'
@@ -43,13 +43,13 @@ services:
         echo 'SHARDE-FUJIMO-SG READY'
 
         echo 'WAITING SHARDE-FUJIMO-DN FOR INIT'
-        mongosh --host ${SHARDE_FUJIMO_DN_ADRS}:${SHARDE_FUJIMO_DN_PORT_OF} /init/init-sharde-everes.js
+        mongosh --host ${SHARDE_FUJIMO_DN_ADRS}:${SHARDE_FUJIMO_DN_PORT_OF} /init/init-sharde-fujimo.js
         echo 'SHARDE-FUJIMO-DN INIT DONE'
 
         echo 'WAITING FOR STARTING UP SHARDE-FUJIMO-DN IN PROGRESS WITH AUTH'
         mongod --shutdown --dbpath /data/db
         while pgrep mongod >/dev/null; do sleep 2; done
-        mongod --replSet everesRS --bind_ip_all --port ${SHARDE_FUJIMO_DN_PORT_OF} --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
+        mongod --replSet fujimoRS --bind_ip_all --port ${SHARDE_FUJIMO_DN_PORT_OF} --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --shardsvr
         until mongosh --quiet --host ${SHARDE_FUJIMO_DN_ADRS}:${SHARDE_FUJIMO_DN_PORT_OF} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
         echo 'THE SHARDE-FUJIMO-DN HAVE FINISHED BOOTING UP WITH AUTH'
 
@@ -57,5 +57,5 @@ services:
       "
 
 volumes:
-  sharde-everes-dn-da:
-  sharde-everes-dn-cf:
+  sharde-fujimo-dn-da:
+  sharde-fujimo-dn-cf:
