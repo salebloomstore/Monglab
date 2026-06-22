@@ -1,48 +1,52 @@
+<!-- ----------------------------------------------------------------------------------------------- -->
 cp .env.example .env
-<!-- -------------------------------------------------------------------------------- -->
-chmod +x restart-keygen.sh && sudo ./restart-keygen.sh
-chmod +x start-keygen.sh && sudo ./start-keygen.sh
-chmod +x down-keygen.sh && sudo ./down-keygen.sh
-<!-- -------------------------------------------------------------------------------- -->
-chmod +x restart-master.sh && sudo ./restart-master.sh
 
-chmod +x restart-sharde-everes-dn.sh && sudo ./restart-sharde-everes-dn.sh
-chmod +x restart-sharde-everes-hn.sh && sudo ./restart-sharde-everes-hn.sh
-chmod +x restart-sharde-everes-sg.sh && sudo ./restart-sharde-everes-sg.sh
+<!-- ----------------------------------------------------------------------------------------------- -->
+chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
+chmod +x driver/boot/keygen.sh && sudo ./driver/boot/keygen.sh
+chmod +x driver/shutdown/keygen.sh && sudo ./driver/shutdown/keygen.sh
 
-chmod +x restart-sharde-fansip-dn.sh && sudo ./restart-sharde-fansip-dn.sh
-chmod +x restart-sharde-fansip-hn.sh && sudo ./restart-sharde-fansip-hn.sh
-chmod +x restart-sharde-fansip-sg.sh && sudo ./restart-sharde-fansip-sg.sh
+<!-- ----------------------------------------------------------------------------------------------- -->
+chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 
-chmod +x restart-sharde-fujimo-dn.sh && sudo ./restart-sharde-fujimo-dn.sh
-chmod +x restart-sharde-fujimo-hn.sh && sudo ./restart-sharde-fujimo-hn.sh
-chmod +x restart-sharde-fujimo-sg.sh && sudo ./restart-sharde-fujimo-sg.sh
-<!-- -------------------------------------------------------------------------------- -->
-chmod +x start-master.sh && sudo ./start-master.sh
+chmod +x driver/reboot/sharde-everes-dn.sh && sudo ./driver/reboot/sharde-everes-dn.sh
+chmod +x driver/reboot/sharde-everes-hn.sh && sudo ./driver/reboot/sharde-everes-hn.sh
+chmod +x driver/reboot/sharde-everes-sg.sh && sudo ./driver/reboot/sharde-everes-sg.sh
 
-chmod +x start-sharde-everes-dn.sh && sudo ./start-sharde-everes-dn.sh
-chmod +x start-sharde-everes-hn.sh && sudo ./start-sharde-everes-hn.sh
-chmod +x start-sharde-everes-sg.sh && sudo ./start-sharde-everes-sg.sh
+chmod +x driver/reboot/sharde-fansip-dn.sh && sudo ./driver/reboot/sharde-fansip-dn.sh
+chmod +x driver/reboot/sharde-fansip-hn.sh && sudo ./driver/reboot/sharde-fansip-hn.sh
+chmod +x driver/reboot/sharde-fansip-sg.sh && sudo ./driver/reboot/sharde-fansip-sg.sh
 
-chmod +x start-sharde-fansip-dn.sh && sudo ./start-sharde-fansip-dn.sh
-chmod +x start-sharde-fansip-hn.sh && sudo ./start-sharde-fansip-hn.sh
-chmod +x start-sharde-fansip-sg.sh && sudo ./start-sharde-fansip-sg.sh
+chmod +x driver/reboot/sharde-fujimo-dn.sh && sudo ./driver/reboot/sharde-fujimo-dn.sh
+chmod +x driver/reboot/sharde-fujimo-hn.sh && sudo ./driver/reboot/sharde-fujimo-hn.sh
+chmod +x driver/reboot/sharde-fujimo-sg.sh && sudo ./driver/reboot/sharde-fujimo-sg.sh
 
-chmod +x start-sharde-fujimo-dn.sh && sudo ./start-sharde-fujimo-dn.sh
-chmod +x start-sharde-fujimo-hn.sh && sudo ./start-sharde-fujimo-hn.sh
-chmod +x start-sharde-fujimo-sg.sh && sudo ./start-sharde-fujimo-sg.sh
-<!-- -------------------------------------------------------------------------------- -->
-chmod +x down-master.sh && sudo ./down-master.sh
+<!-- ----------------------------------------------------------------------------------------------- -->
+chmod +x driver/boot/master.sh && sudo ./driver/boot/master.sh
 
-chmod +x down-sharde-everes-dn.sh && sudo ./down-sharde-everes-dn.sh
-chmod +x down-sharde-everes-hn.sh && sudo ./down-sharde-everes-hn.sh
-chmod +x down-sharde-everes-sg.sh && sudo ./down-sharde-everes-sg.sh
+chmod +x driver/boot/sharde-everes-dn.sh && sudo ./driver/boot/sharde-everes-dn.sh
+chmod +x driver/boot/sharde-everes-hn.sh && sudo ./driver/boot/sharde-everes-hn.sh
+chmod +x driver/boot/sharde-everes-sg.sh && sudo ./driver/boot/sharde-everes-sg.sh
 
-chmod +x down-sharde-fansip-dn.sh && sudo ./down-sharde-fansip-dn.sh
-chmod +x down-sharde-fansip-hn.sh && sudo ./down-sharde-fansip-hn.sh
-chmod +x down-sharde-fansip-sg.sh && sudo ./down-sharde-fansip-sg.sh
+chmod +x driver/boot/sharde-fansip-dn.sh && sudo ./driver/boot/sharde-fansip-dn.sh
+chmod +x driver/boot/sharde-fansip-hn.sh && sudo ./driver/boot/sharde-fansip-hn.sh
+chmod +x driver/boot/sharde-fansip-sg.sh && sudo ./driver/boot/sharde-fansip-sg.sh
 
-chmod +x down-sharde-fujimo-dn.sh && sudo ./down-sharde-fujimo-dn.sh
-chmod +x down-sharde-fujimo-hn.sh && sudo ./down-sharde-fujimo-hn.sh
-chmod +x down-sharde-fujimo-sg.sh && sudo ./down-sharde-fujimo-sg.sh
-<!-- -------------------------------------------------------------------------------- -->
+chmod +x driver/boot/sharde-fujimo-dn.sh && sudo ./driver/boot/sharde-fujimo-dn.sh
+chmod +x driver/boot/sharde-fujimo-hn.sh && sudo ./driver/boot/sharde-fujimo-hn.sh
+chmod +x driver/boot/sharde-fujimo-sg.sh && sudo ./driver/boot/sharde-fujimo-sg.sh
+
+<!-- ----------------------------------------------------------------------------------------------- -->
+chmod +x driver/shutdown/master.sh && sudo ./driver/shutdown/master.sh
+
+chmod +x driver/shutdown/sharde-everes-dn.sh && sudo ./driver/shutdown/sharde-everes-dn.sh
+chmod +x driver/shutdown/sharde-everes-hn.sh && sudo ./driver/shutdown/sharde-everes-hn.sh
+chmod +x driver/shutdown/sharde-everes-sg.sh && sudo ./driver/shutdown/sharde-everes-sg.sh
+
+chmod +x driver/shutdown/sharde-fansip-dn.sh && sudo ./driver/shutdown/sharde-fansip-dn.sh
+chmod +x driver/shutdown/sharde-fansip-hn.sh && sudo ./driver/shutdown/sharde-fansip-hn.sh
+chmod +x driver/shutdown/sharde-fansip-sg.sh && sudo ./driver/shutdown/sharde-fansip-sg.sh
+
+chmod +x driver/shutdown/sharde-fujimo-dn.sh && sudo ./driver/shutdown/sharde-fujimo-dn.sh
+chmod +x driver/shutdown/sharde-fujimo-hn.sh && sudo ./driver/shutdown/sharde-fujimo-hn.sh
+chmod +x driver/shutdown/sharde-fujimo-sg.sh && sudo ./driver/shutdown/sharde-fujimo-sg.sh
