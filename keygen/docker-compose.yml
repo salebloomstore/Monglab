@@ -1,0 +1,16 @@
+name: mongos-master
+
+networks:
+  master-netwrk:
+    external: true
+
+services:
+  keygen:
+    container_name: ${APP_NAME}_keygen-suicid-cr
+    build: .
+    volumes:
+      - ./keyfile:/keyfile
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: ["bash", "/create-keyfile.sh"]
+    networks:
+      - master-netwrk
