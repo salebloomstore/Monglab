@@ -4,4 +4,4 @@ set -e
 
 docker compose --env-file .env -f server/sharde-everes-dn/docker-compose.yml down -v --remove-orphans
 
-echo "sharde-everes-dn downed successfully!"
+echo "sharde-everes-dn shutdowned successfully!"

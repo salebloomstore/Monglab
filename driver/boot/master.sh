@@ -47,4 +47,8 @@ chmod +x driver/boot/sharde-matter-dn.sh && sudo ./driver/boot/sharde-matter-dn.
 chmod +x driver/boot/sharde-matter-hn.sh && sudo ./driver/boot/sharde-matter-hn.sh
 chmod +x driver/boot/sharde-matter-sg.sh && sudo ./driver/boot/sharde-matter-sg.sh
 
+chmod +x driver/boot/mongos-router-dn.sh && sudo ./driver/boot/mongos-router-dn.sh
+chmod +x driver/boot/mongos-router-hn.sh && sudo ./driver/boot/mongos-router-hn.sh
+chmod +x driver/boot/mongos-router-sg.sh && sudo ./driver/boot/mongos-router-sg.sh
+
 echo "Master boot successfully!"

@@ -1,0 +1,35 @@
+name: mongos-expres-io
+
+x-mongo-image: &mongo-image mongo:7.0.14@sha256:0032d2ca20db5fa34926f196c8a43b74e34ed239a7f2453ff1505b6f12ba8ea6
+
+networks:
+  master-netwrk:
+    external: true
+
+services:
+  mongos-expres-io:
+    container_name: ${APP_NAME}_mongos-expres-io
+    image: *mongo-express-image
+    env_file: .env
+    ports:
+      - ${MONGOS_EXPRES_IO_PORT}:${MONGOS_EXPRES_IO_PORT_OF}
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMINIST_SHARDE_MATTER}:${MONGO_PASSWORD_SHARDE_MATTER}@${MONGOS_ROUTER_DN_ADRS}:${MONGOS_ROUTER_DN_PORT_OF},${MONGOS_ROUTER_HN_ADRS}:${MONGOS_ROUTER_HN_PORT_OF},${MONGOS_ROUTER_SG_ADRS}:${MONGOS_ROUTER_SG_PORT_OF}/admin?authSource=admin
+      ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_ADMINIST}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
+      PORT: ${MONGOS_EXPRES_IO_PORT_OF}
+    command: |
+      bash -c "
+      echo 'Waiting for mongos startup...'
+
+      until nc -z \"$${MONGOS_ROUTER_DN_ADRS}\" \"$${MONGOS_ROUTER_DN_PORT_OF}\"; do sleep 2; done
+      until nc -z \"$${MONGOS_ROUTER_HN_ADRS}\" \"$${MONGOS_ROUTER_HN_PORT_OF}\"; do sleep 2; done
+      until nc -z \"$${MONGOS_ROUTER_SG_ADRS}\" \"$${MONGOS_ROUTER_SG_PORT_OF}\"; do sleep 2; done
+
+      echo 'mongos is ready'
+
+      exec node app
+      "
+    networks:
+      - master-netwrk

@@ -20,4 +20,8 @@ chmod +x driver/shutdown/sharde-matter-dn.sh && sudo ./driver/shutdown/sharde-ma
 chmod +x driver/shutdown/sharde-matter-hn.sh && sudo ./driver/shutdown/sharde-matter-hn.sh
 chmod +x driver/shutdown/sharde-matter-sg.sh && sudo ./driver/shutdown/sharde-matter-sg.sh
 
-echo "Master downed successfully!"
+chmod +x driver/shutdown/mongos-router-dn.sh && sudo ./driver/shutdown/mongos-router-dn.sh
+chmod +x driver/shutdown/mongos-router-hn.sh && sudo ./driver/shutdown/mongos-router-hn.sh
+chmod +x driver/shutdown/mongos-router-sg.sh && sudo ./driver/shutdown/mongos-router-sg.sh
+
+echo "Master shutdowned successfully!"

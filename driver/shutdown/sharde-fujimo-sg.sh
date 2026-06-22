@@ -4,4 +4,4 @@ set -e
 
 docker compose --env-file .env -f server/sharde-fujimo-sg/docker-compose.yml down -v --remove-orphans
 
-echo "sharde-fujimo-sg downed successfully!"
+echo "sharde-fujimo-sg shutdowned successfully!"
