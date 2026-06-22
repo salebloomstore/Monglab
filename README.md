@@ -20,3 +20,4 @@ chmod +x down-master.sh && sudo ./down-master.sh
 chmod +x down-sharde-everes-dn.sh && sudo ./down-sharde-everes-dn.sh
 chmod +x down-sharde-everes-hn.sh && sudo ./down-sharde-everes-hn.sh
 chmod +x down-sharde-everes-sg.sh && sudo ./down-sharde-everes-sg.sh
+<!-- -------------------------------------------------------------------------------- -->
