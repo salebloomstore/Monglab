@@ -24,6 +24,7 @@ for DIR in \
     sharde-matter-sg
 do
     TARGET="$DIR/keyfile/mongo-keyfile"
+    mkdir -p "$(dirname "$TARGET")"
 
     cp "$SOURCE" "$TARGET"
     chown 999:999 "$TARGET"
