@@ -2,8 +2,7 @@
 
 set -e
 
-
-chmod +x ../shutdown/keygen.sh && sudo ../shutdown/keygen.sh
-chmod +x ../boot/keygen.sh && sudo ../boot/keygen.sh
+chmod +x driver/shutdown/keygen.sh && sudo driver/shutdown/keygen.sh
+chmod +x driver/boot/keygen.sh && sudo driver/boot/keygen.sh
 
 echo "Keygen reboot successfully!"
