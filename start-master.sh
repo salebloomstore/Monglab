@@ -35,6 +35,6 @@ chmod +x start-sharde-everes-dn.sh && sudo ./start-sharde-everes-dn.sh
 chmod +x start-sharde-everes-hn.sh && sudo ./start-sharde-everes-hn.sh
 chmod +x start-sharde-everes-sg.sh && sudo ./start-sharde-everes-sg.sh
 
-sudo chown 1000:1000 -R . && sudo chmod 777 -R .
+# sudo chown 1000:1000 -R . && sudo chmod 777 -R .
 
 echo "Master started successfully!"
