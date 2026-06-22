@@ -4,6 +4,8 @@ set -e
 
 find . -type f -name "*.sh" -exec chmod +x {} \;
 
+chmod +x restart-keygen.sh && sudo ./restart-keygen.sh
+
 SOURCE="keygen/keyfile/mongo-keyfile"
 
 for DIR in \
