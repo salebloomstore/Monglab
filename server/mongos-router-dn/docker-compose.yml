@@ -17,7 +17,7 @@ services:
       - ./init/cluster.js:/init/cluster.js:ro
     env_file: ../../.env
     ports:
-      - ${MONGOS-ROUTER_DN_PORT}:${MONGOS-ROUTER_DN_PORT_OF}
+      - ${MONGOS-ROUTER_DN_PORT}:${MONGOS_ROUTER_DN_PORT_OF}
     networks:
       - master-netwrk
     command: |
