@@ -1,4 +1,3 @@
-/keyfile
 .env
 .env.*
 !.env.example
