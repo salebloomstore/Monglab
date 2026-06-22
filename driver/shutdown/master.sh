@@ -16,4 +16,8 @@ chmod +x driver/shutdown/sharde-fujimo-dn.sh && sudo ./driver/shutdown/sharde-fu
 chmod +x driver/shutdown/sharde-fujimo-hn.sh && sudo ./driver/shutdown/sharde-fujimo-hn.sh
 chmod +x driver/shutdown/sharde-fujimo-sg.sh && sudo ./driver/shutdown/sharde-fujimo-sg.sh
 
+chmod +x driver/shutdown/sharde-matter-dn.sh && sudo ./driver/shutdown/sharde-matter-dn.sh
+chmod +x driver/shutdown/sharde-matter-hn.sh && sudo ./driver/shutdown/sharde-matter-hn.sh
+chmod +x driver/shutdown/sharde-matter-sg.sh && sudo ./driver/shutdown/sharde-matter-sg.sh
+
 echo "Master downed successfully!"

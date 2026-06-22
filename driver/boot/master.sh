@@ -43,4 +43,8 @@ chmod +x driver/boot/sharde-fujimo-dn.sh && sudo ./driver/boot/sharde-fujimo-dn.
 chmod +x driver/boot/sharde-fujimo-hn.sh && sudo ./driver/boot/sharde-fujimo-hn.sh
 chmod +x driver/boot/sharde-fujimo-sg.sh && sudo ./driver/boot/sharde-fujimo-sg.sh
 
+chmod +x driver/boot/sharde-matter-dn.sh && sudo ./driver/boot/sharde-matter-dn.sh
+chmod +x driver/boot/sharde-matter-hn.sh && sudo ./driver/boot/sharde-matter-hn.sh
+chmod +x driver/boot/sharde-matter-sg.sh && sudo ./driver/boot/sharde-matter-sg.sh
+
 echo "Master boot successfully!"

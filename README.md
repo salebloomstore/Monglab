@@ -21,6 +21,10 @@ chmod +x driver/reboot/sharde-fujimo-dn.sh && sudo ./driver/reboot/sharde-fujimo
 chmod +x driver/reboot/sharde-fujimo-hn.sh && sudo ./driver/reboot/sharde-fujimo-hn.sh
 chmod +x driver/reboot/sharde-fujimo-sg.sh && sudo ./driver/reboot/sharde-fujimo-sg.sh
 
+chmod +x driver/reboot/sharde-matter-dn.sh && sudo ./driver/reboot/sharde-matter-dn.sh
+chmod +x driver/reboot/sharde-matter-hn.sh && sudo ./driver/reboot/sharde-matter-hn.sh
+chmod +x driver/reboot/sharde-matter-sg.sh && sudo ./driver/reboot/sharde-matter-sg.sh
+
 <!-- ----------------------------------------------------------------------------------------------- -->
 chmod +x driver/boot/master.sh && sudo ./driver/boot/master.sh
 
@@ -36,6 +40,10 @@ chmod +x driver/boot/sharde-fujimo-dn.sh && sudo ./driver/boot/sharde-fujimo-dn.
 chmod +x driver/boot/sharde-fujimo-hn.sh && sudo ./driver/boot/sharde-fujimo-hn.sh
 chmod +x driver/boot/sharde-fujimo-sg.sh && sudo ./driver/boot/sharde-fujimo-sg.sh
 
+chmod +x driver/boot/sharde-matter-dn.sh && sudo ./driver/boot/sharde-matter-dn.sh
+chmod +x driver/boot/sharde-matter-hn.sh && sudo ./driver/boot/sharde-matter-hn.sh
+chmod +x driver/boot/sharde-matter-sg.sh && sudo ./driver/boot/sharde-matter-sg.sh
+
 <!-- ----------------------------------------------------------------------------------------------- -->
 chmod +x driver/shutdown/master.sh && sudo ./driver/shutdown/master.sh
 
@@ -50,3 +58,7 @@ chmod +x driver/shutdown/sharde-fansip-sg.sh && sudo ./driver/shutdown/sharde-fa
 chmod +x driver/shutdown/sharde-fujimo-dn.sh && sudo ./driver/shutdown/sharde-fujimo-dn.sh
 chmod +x driver/shutdown/sharde-fujimo-hn.sh && sudo ./driver/shutdown/sharde-fujimo-hn.sh
 chmod +x driver/shutdown/sharde-fujimo-sg.sh && sudo ./driver/shutdown/sharde-fujimo-sg.sh
+
+chmod +x driver/shutdown/sharde-matter-dn.sh && sudo ./driver/shutdown/sharde-matter-dn.sh
+chmod +x driver/shutdown/sharde-matter-hn.sh && sudo ./driver/shutdown/sharde-matter-hn.sh
+chmod +x driver/shutdown/sharde-matter-sg.sh && sudo ./driver/shutdown/sharde-matter-sg.sh

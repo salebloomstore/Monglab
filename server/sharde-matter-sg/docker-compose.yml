@@ -1,0 +1,52 @@
+name: sharde-matter-sg
+
+x-mongo-image: &mongo-image mongo:7.0.14@sha256:0032d2ca20db5fa34926f196c8a43b74e34ed239a7f2453ff1505b6f12ba8ea6
+
+networks:
+  master-netwrk:
+    external: true
+
+services:
+  sharde-matter-sg:
+    container_name: ${APP_NAME}_sharde-matter-sg
+    image: *mongo-image
+    volumes:
+      - ./keyfile:/etc
+      - sharde-matter-sg-da:/data/db
+      - sharde-matter-sg-cf:/data/configdb
+    env_file: ../../.env
+    ports:
+      - ${SHARDE_MATTER_SG_PORT}:${SHARDE_MATTER_SG_PORT_OF}
+    networks:
+      - master-netwrk
+    command: |
+      bash -c "
+        set -e
+
+        echo 'WAITING FOR KEYFILE...'
+        while [ ! -f /etc/mongo-keyfile ]; do sleep 2; done
+        echo 'KEYFILE CREATED'
+
+        mkdir -p /data/db
+
+        echo 'STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH NO AUTH'
+        mongod --replSet matterRS --bind_ip_all --port ${SHARDE_MATTER_SG_PORT_OF} --dbpath /data/db --fork --logpath /tmp/mongod.log --configsvr
+        echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH NO AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-MATTER-DN IN PROGRESS WITH AUTH'
+        until mongosh --quiet --host ${SHARDE_MATTER_DN_ADRS}:${SHARDE_MATTER_DN_PORT_OF} -u ${MONGO_ADMINIST_SHARDE_MATTER} -p ${MONGO_PASSWORD_SHARDE_MATTER} --authenticationDatabase admin --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'THE SHARDE-MATTER-DN HAVE FINISHED BOOTING UP WITH AUTH'
+
+        echo 'WAITING FOR STARTING UP SHARDE-MATTER-SG IN PROGRESS WITH AUTH'
+        mongod --shutdown --dbpath /data/db
+        while pgrep mongod >/dev/null; do sleep 2; done
+        mongod --replSet matterRS --bind_ip_all --port ${SHARDE_MATTER_SG_PORT_OF} --dbpath /data/db --auth --keyFile /etc/mongo-keyfile --setParameter enableLocalhostAuthBypass=0 --fork --logpath /tmp/mongod.log --configsvr
+        until mongosh --quiet --host ${SHARDE_MATTER_SG_ADRS}:${SHARDE_MATTER_SG_PORT_OF} --eval 'db.adminCommand({ ping: 1 })' > /dev/null 2>&1; do sleep 2; done
+        echo 'THE SHARDE-MATTER-SG HAVE FINISHED BOOTING UP WITH AUTH'
+
+        tail -f /tmp/mongod.log
+      "
+
+volumes:
+  sharde-matter-sg-da:
+  sharde-matter-sg-cf:
