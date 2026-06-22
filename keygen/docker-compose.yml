@@ -10,6 +10,7 @@ services:
     build: .
     volumes:
       - ./keyfile:/keyfile
+      - ./create-keyfile.sh:/create-keyfile.sh
       - /var/run/docker.sock:/var/run/docker.sock
     entrypoint: ["bash", "/create-keyfile.sh"]
     networks:
