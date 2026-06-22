@@ -1,5 +1,6 @@
 cp .env.example .env
 <!-- -------------------------------------------------------------------------------- -->
+chmod +x restart-keygen.sh && sudo ./restart-keygen.sh
 chmod +x start-keygen.sh && sudo ./start-keygen.sh
 chmod +x down-keygen.sh && sudo ./down-keygen.sh
 <!-- -------------------------------------------------------------------------------- -->
