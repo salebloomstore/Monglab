@@ -14,6 +14,7 @@ services:
       - ./keyfile:/etc
       - sharde-everes-dn-da:/data/db
       - sharde-everes-dn-cf:/data/configdb
+      - ./init/init-sharde-everes.js:/init/init-sharde-everes.js:ro
     env_file: ../.env
     ports:
       - ${SHARDE_EVERES_DN_PORT}:${SHARDE_EVERES_DN_PORT_OF}
