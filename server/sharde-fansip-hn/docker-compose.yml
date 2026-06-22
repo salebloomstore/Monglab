@@ -14,7 +14,7 @@ services:
       - ./keyfile:/etc
       - sharde-fansip-hn-da:/data/db
       - sharde-fansip-hn-cf:/data/configdb
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_FANSIP_HN_PORT}:${SHARDE_FANSIP_HN_PORT_OF}
     networks:

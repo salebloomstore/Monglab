@@ -15,7 +15,7 @@ services:
       - sharde-fujimo-dn-da:/data/db
       - sharde-fujimo-dn-cf:/data/configdb
       - ./init/init-sharde-fujimo.js:/init/init-sharde-fujimo.js:ro
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_FUJIMO_DN_PORT}:${SHARDE_FUJIMO_DN_PORT_OF}
     networks:

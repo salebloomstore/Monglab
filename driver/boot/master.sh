@@ -30,7 +30,7 @@ do
     chown 999:999 "$TARGET"
     chmod 400 "$TARGET"
 done
-ls
+
 chmod +x driver/boot/sharde-everes-dn.sh && sudo ./driver/boot/sharde-everes-dn.sh
 chmod +x driver/boot/sharde-everes-hn.sh && sudo ./driver/boot/sharde-everes-hn.sh
 chmod +x driver/boot/sharde-everes-sg.sh && sudo ./driver/boot/sharde-everes-sg.sh

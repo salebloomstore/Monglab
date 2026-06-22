@@ -14,7 +14,7 @@ services:
       - ./keyfile:/etc
       - sharde-fansip-sg-da:/data/db
       - sharde-fansip-sg-cf:/data/configdb
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_FANSIP_SG_PORT}:${SHARDE_FANSIP_SG_PORT_OF}
     networks:

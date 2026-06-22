@@ -14,7 +14,7 @@ services:
       - ./keyfile:/etc
       - sharde-everes-hn-da:/data/db
       - sharde-everes-hn-cf:/data/configdb
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_EVERES_HN_PORT}:${SHARDE_EVERES_HN_PORT_OF}
     networks:

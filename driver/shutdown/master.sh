@@ -3,7 +3,7 @@
 set -e
 
 find . -type f -name "*.sh" -exec chmod +x {} \;
-ls
+
 chmod +x driver/shutdown/sharde-everes-dn.sh && sudo ./driver/shutdown/sharde-everes-dn.sh
 chmod +x driver/shutdown/sharde-everes-hn.sh && sudo ./driver/shutdown/sharde-everes-hn.sh
 chmod +x driver/shutdown/sharde-everes-sg.sh && sudo ./driver/shutdown/sharde-everes-sg.sh

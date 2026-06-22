@@ -14,7 +14,7 @@ services:
       - ./keyfile:/etc
       - sharde-everes-sg-da:/data/db
       - sharde-everes-sg-cf:/data/configdb
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_EVERES_SG_PORT}:${SHARDE_EVERES_SG_PORT_OF}
     networks:

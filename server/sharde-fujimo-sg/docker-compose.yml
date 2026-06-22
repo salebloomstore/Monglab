@@ -14,7 +14,7 @@ services:
       - ./keyfile:/etc
       - sharde-fujimo-sg-da:/data/db
       - sharde-fujimo-sg-cf:/data/configdb
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_FUJIMO_SG_PORT}:${SHARDE_FUJIMO_SG_PORT_OF}
     networks:

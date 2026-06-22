@@ -15,7 +15,7 @@ services:
       - sharde-fansip-dn-da:/data/db
       - sharde-fansip-dn-cf:/data/configdb
       - ./init/init-sharde-fansip.js:/init/init-sharde-fansip.js:ro
-    env_file: ../.env
+    env_file: ../../.env
     ports:
       - ${SHARDE_FANSIP_DN_PORT}:${SHARDE_FANSIP_DN_PORT_OF}
     networks:
