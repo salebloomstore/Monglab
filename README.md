@@ -102,7 +102,7 @@ cp .env.example .env
 
 ```bash
 chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
-chmod +x driver/devlop-drv/reboot.sh && sudo ./driver/devlop-drv/reboot.sh
+chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 ```
 
 ### 3. Develop
@@ -117,7 +117,7 @@ cp .env.example .env
 
 ```bash
 chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
-chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
+chmod +x driver/devlop-drv/reboot.sh && sudo ./driver/devlop-drv/reboot.sh
 ```
 
 <!-- ----------------------------------------------------------------------------------------------- -->
