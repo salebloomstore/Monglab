@@ -24,6 +24,4 @@ chmod +x driver/shutdown/mongos-router-dn.sh && sudo ./driver/shutdown/mongos-ro
 chmod +x driver/shutdown/mongos-router-hn.sh && sudo ./driver/shutdown/mongos-router-hn.sh
 chmod +x driver/shutdown/mongos-router-sg.sh && sudo ./driver/shutdown/mongos-router-sg.sh
 
-chmod +x driver/shutdown/mongos-expres-io.sh && sudo ./driver/shutdown/mongos-expres-io.sh
-
 echo "Master shutdowned successfully!"

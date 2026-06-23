@@ -267,33 +267,6 @@ services:
         tail -f /dev/null
       "
 
-  devlop-expres-io:
-    container_name: ${APP_NAME}_devlop-expres-io
-    image: *mongo-express-image
-    env_file: ../../.env
-    ports:
-      - ${MONGOS_EXPRES_IO_PORT}:${MONGOS_EXPRES_IO_PORT_OF}
-    restart: always
-    environment:
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMINIST_SHARDE_MATTER}:${MONGO_PASSWORD_SHARDE_MATTER}@${MONGOS_ROUTER_DN_ADRS}:${MONGOS_ROUTER_DN_PORT_OF},${MONGOS_ROUTER_HN_ADRS}:${MONGOS_ROUTER_HN_PORT_OF},${MONGOS_ROUTER_SG_ADRS}:${MONGOS_ROUTER_SG_PORT_OF}/admin?authSource=admin
-      ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_ADMINIST}
-      ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
-      PORT: ${MONGOS_EXPRES_IO_PORT_OF}
-    command: |
-      bash -c "
-      echo 'Waiting for mongos startup...'
-
-      until nc -z \"$${MONGOS_ROUTER_DN_ADRS}\" \"$${MONGOS_ROUTER_DN_PORT_OF}\"; do sleep 2; done
-      until nc -z \"$${MONGOS_ROUTER_HN_ADRS}\" \"$${MONGOS_ROUTER_HN_PORT_OF}\"; do sleep 2; done
-      until nc -z \"$${MONGOS_ROUTER_SG_ADRS}\" \"$${MONGOS_ROUTER_SG_PORT_OF}\"; do sleep 2; done
-
-      echo 'mongos is ready'
-
-      exec node app
-      "
-    networks:
-      - master-netwrk
-
 volumes:
   devlop-router-ms-da:
   devlop-router-ms-cf:

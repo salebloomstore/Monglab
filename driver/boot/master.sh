@@ -51,6 +51,4 @@ chmod +x driver/boot/mongos-router-dn.sh && sudo ./driver/boot/mongos-router-dn.
 chmod +x driver/boot/mongos-router-hn.sh && sudo ./driver/boot/mongos-router-hn.sh
 chmod +x driver/boot/mongos-router-sg.sh && sudo ./driver/boot/mongos-router-sg.sh
 
-chmod +x driver/boot/mongos-expres-io.sh && sudo ./driver/boot/mongos-expres-io.sh
-
 echo "Master boot successfully!"

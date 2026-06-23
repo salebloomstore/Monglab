@@ -9,6 +9,7 @@ cp "$SOURCE" "$TARGET"
 chown 999:999 "$TARGET"
 chmod 400 "$TARGET"
 
-docker compose --env-file .env -f server/devlop-router-io/docker-compose.yml up -d --build --force-recreate
+chmod +x driver/boot/devlop-router-io.sh && sudo ./driver/boot/devlop-router-io.sh
+chmod +x driver/boot/mongos-expres-io.sh && sudo ./driver/boot/mongos-expres-io.sh
 
 echo "devlop-router-io boot successfully!"
