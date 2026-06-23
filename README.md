@@ -102,6 +102,21 @@ cp .env.example .env
 
 ```bash
 chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
+chmod +x driver/devlop-drv/reboot.sh && sudo ./driver/devlop-drv/reboot.sh
+```
+
+### 3. Develop
+
+#### Please configure .env.example before running
+
+```bash
+cp .env.example .env
+```
+
+#### Or configure .env before running
+
+```bash
+chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
 chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 ```
 
