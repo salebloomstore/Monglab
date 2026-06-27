@@ -10,6 +10,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
     volumes:
       - ./keyfile:/etc
       - sharde-fujimo-sg-da:/data/db
