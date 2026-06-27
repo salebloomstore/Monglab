@@ -90,7 +90,7 @@ sudo chown 1000:1000 -R . && sudo chmod 777 -R .
 find . -type f -name "*.sh" -exec chmod +x {} \;
 ```
 
-### 2. Build & Start
+### 1. Build & Start
 
 #### Please configure .env.builde.example before running
 
@@ -105,7 +105,7 @@ chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
 chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 ```
 
-### 3. Develop
+### 2. Develop
 
 #### Please configure .env.devlop.example before running
 
@@ -120,7 +120,7 @@ chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
 chmod +x driver/reboot/devlop.sh && sudo ./driver/reboot/devlop.sh
 ```
 
-### 4. Driver List
+### 3. Driver List
 
 ```bash
 # <!-- ----------------------------------------------------------------------------------------------- -->
