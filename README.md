@@ -2,8 +2,8 @@
 
 ![MongoDB](https://img.shields.io/badge/Database-MongoDB%207.0.14-green)
 ![Mongo Express](https://img.shields.io/badge/Admin-Mongo--Express%201.0.2-orange)
-![Docker Engine](https://img.shields.io/badge/Docker%20Engine-29.5.2-blue)
-![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v5.1.4-blue)
+![Docker Engine](https://img.shields.io/badge/Docker%20Engine-28.5.2-blue)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v2.40.3-blue)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ---
