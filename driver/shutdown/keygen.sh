@@ -2,27 +2,16 @@
 
 set -e
 
-rm -rf server/keygen/keyfile/mongo-keyfile
-rm -rf server/devlop-router-io/keyfile/mongo-keyfile
-
-rm -rf server/mongos-router-dn/keyfile/mongo-keyfile
-rm -rf server/mongos-router-hn/keyfile/mongo-keyfile
-rm -rf server/mongos-router-sg/keyfile/mongo-keyfile
-
-rm -rf server/sharde-everes-dn/keyfile/mongo-keyfile
-rm -rf server/sharde-everes-hn/keyfile/mongo-keyfile
-rm -rf server/sharde-everes-sg/keyfile/mongo-keyfile
-
-rm -rf server/sharde-fansip-dn/keyfile/mongo-keyfile
-rm -rf server/sharde-fansip-hn/keyfile/mongo-keyfile
-rm -rf server/sharde-fansip-sg/keyfile/mongo-keyfile
-
-rm -rf server/sharde-fujimo-dn/keyfile/mongo-keyfile
-rm -rf server/sharde-fujimo-hn/keyfile/mongo-keyfile
-rm -rf server/sharde-fujimo-sg/keyfile/mongo-keyfile
-
-rm -rf server/sharde-matter-dn/keyfile/mongo-keyfile
-rm -rf server/sharde-matter-hn/keyfile/mongo-keyfile
-rm -rf server/sharde-matter-sg/keyfile/mongo-keyfile
+for name in \
+  keygen \
+  devlop-router-io \
+  mongos-router-{dn,hn,sg} \
+  sharde-everes-{dn,hn,sg} \
+  sharde-fansip-{dn,hn,sg} \
+  sharde-fujimo-{dn,hn,sg} \
+  sharde-matter-{dn,hn,sg}
+do
+  rm -rf "server/$name/keyfile/mongo-keyfile"
+done
 
 echo "Keygen shutdowned successfully!"
