@@ -120,10 +120,13 @@ chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
 chmod +x driver/reboot/devlop.sh && sudo ./driver/reboot/devlop.sh
 ```
 
-<!-- ----------------------------------------------------------------------------------------------- -->
+### 4. Driver List
+
+```bash
+# <!-- ----------------------------------------------------------------------------------------------- -->
 cp .env.example .env
 
-<!-- ----------------------------------------------------------------------------------------------- -->
+# <!-- ----------------------------------------------------------------------------------------------- -->
 chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
 
 chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
@@ -152,7 +155,7 @@ chmod +x driver/reboot/mongos-router-sg.sh && sudo ./driver/reboot/mongos-router
 
 chmod +x driver/reboot/mongos-expres-io.sh && sudo ./driver/reboot/mongos-expres-io.sh
 
-<!-- ----------------------------------------------------------------------------------------------- -->
+# <!-- ----------------------------------------------------------------------------------------------- -->
 chmod +x driver/boot/keygen.sh && sudo ./driver/boot/keygen.sh
 
 chmod +x driver/boot/master.sh && sudo ./driver/boot/master.sh
@@ -181,7 +184,7 @@ chmod +x driver/boot/mongos-router-sg.sh && sudo ./driver/boot/mongos-router-sg.
 
 chmod +x driver/boot/mongos-expres-io.sh && sudo ./driver/boot/mongos-expres-io.sh
 
-<!-- ----------------------------------------------------------------------------------------------- -->
+# <!-- ----------------------------------------------------------------------------------------------- -->
 chmod +x driver/shutdown/keygen.sh && sudo ./driver/shutdown/keygen.sh
 
 chmod +x driver/shutdown/master.sh && sudo ./driver/shutdown/master.sh
@@ -209,3 +212,4 @@ chmod +x driver/shutdown/mongos-router-hn.sh && sudo ./driver/shutdown/mongos-ro
 chmod +x driver/shutdown/mongos-router-sg.sh && sudo ./driver/shutdown/mongos-router-sg.sh
 
 chmod +x driver/shutdown/mongos-expres-io.sh && sudo ./driver/shutdown/mongos-expres-io.sh
+```
