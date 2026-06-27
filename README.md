@@ -128,6 +128,8 @@ chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
 
 chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 
+chmod +x driver/reboot/devlop.sh && sudo ./driver/reboot/devlop.sh
+
 chmod +x driver/reboot/sharde-everes-dn.sh && sudo ./driver/reboot/sharde-everes-dn.sh
 chmod +x driver/reboot/sharde-everes-hn.sh && sudo ./driver/reboot/sharde-everes-hn.sh
 chmod +x driver/reboot/sharde-everes-sg.sh && sudo ./driver/reboot/sharde-everes-sg.sh
@@ -155,6 +157,8 @@ chmod +x driver/boot/keygen.sh && sudo ./driver/boot/keygen.sh
 
 chmod +x driver/boot/master.sh && sudo ./driver/boot/master.sh
 
+chmod +x driver/boot/devlop.sh && sudo ./driver/boot/devlop.sh
+
 chmod +x driver/boot/sharde-everes-dn.sh && sudo ./driver/boot/sharde-everes-dn.sh
 chmod +x driver/boot/sharde-everes-hn.sh && sudo ./driver/boot/sharde-everes-hn.sh
 chmod +x driver/boot/sharde-everes-sg.sh && sudo ./driver/boot/sharde-everes-sg.sh
@@ -181,6 +185,8 @@ chmod +x driver/boot/mongos-expres-io.sh && sudo ./driver/boot/mongos-expres-io.
 chmod +x driver/shutdown/keygen.sh && sudo ./driver/shutdown/keygen.sh
 
 chmod +x driver/shutdown/master.sh && sudo ./driver/shutdown/master.sh
+
+chmod +x driver/shutdown/devlop.sh && sudo ./driver/shutdown/devlop.sh
 
 chmod +x driver/shutdown/sharde-everes-dn.sh && sudo ./driver/shutdown/sharde-everes-dn.sh
 chmod +x driver/shutdown/sharde-everes-hn.sh && sudo ./driver/shutdown/sharde-everes-hn.sh
