@@ -92,10 +92,10 @@ find . -type f -name "*.sh" -exec chmod +x {} \;
 
 ### 2. Build & Start
 
-#### Please configure .env.example before running
+#### Please configure .env.builde.example before running
 
 ```bash
-cp .env.example .env
+cp .env.builde.example .env
 ```
 
 #### Or configure .env before running
@@ -107,10 +107,10 @@ chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 
 ### 3. Develop
 
-#### Please configure .env.example before running
+#### Please configure .env.devlop.example before running
 
 ```bash
-cp .env.example .env
+cp .env.devlop.example .env
 ```
 
 #### Or configure .env before running
@@ -124,7 +124,8 @@ chmod +x driver/reboot/devlop.sh && sudo ./driver/reboot/devlop.sh
 
 ```bash
 # <!-- ----------------------------------------------------------------------------------------------- -->
-cp .env.example .env
+cp .env.builde.example .env
+cp .env.devlop.example .env
 
 # <!-- ----------------------------------------------------------------------------------------------- -->
 chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
