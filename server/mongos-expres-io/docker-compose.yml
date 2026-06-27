@@ -1,7 +1,5 @@
 name: mongos-expres-io
 
-x-mongo-express-image: &mongo-express-image mongo-express:1.0.2@sha256:1b23d7976f0210dbec74045c209e52fbb26d29b2e873d6c6fa3d3f0ae32c2a64
-
 networks:
   master-netwrk:
     external: true
@@ -9,7 +7,9 @@ networks:
 services:
   mongos-expres-io:
     container_name: ${APP_NAME}_mongos-expres-io
-    image: *mongo-express-image
+    build:
+      context: .
+      dockerfile: Dockerfile
     env_file: ../../.env
     ports:
       - ${MONGOS_EXPRES_IO_PORT}:${MONGOS_EXPRES_IO_PORT_OF}
@@ -19,17 +19,5 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: ${EXPRESS_ADMINIST}
       ME_CONFIG_BASICAUTH_PASSWORD: ${EXPRESS_PASSWORD}
       PORT: ${MONGOS_EXPRES_IO_PORT_OF}
-    command: |
-      bash -c "
-      echo 'Waiting for mongos startup...'
-
-      until nc -z \"$${MONGOS_ROUTER_DN_ADRS}\" \"$${MONGOS_ROUTER_DN_PORT_OF}\"; do sleep 2; done
-      until nc -z \"$${MONGOS_ROUTER_HN_ADRS}\" \"$${MONGOS_ROUTER_HN_PORT_OF}\"; do sleep 2; done
-      until nc -z \"$${MONGOS_ROUTER_SG_ADRS}\" \"$${MONGOS_ROUTER_SG_PORT_OF}\"; do sleep 2; done
-
-      echo 'mongos is ready'
-
-      exec node app
-      "
     networks:
       - master-netwrk

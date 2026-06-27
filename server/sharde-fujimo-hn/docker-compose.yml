@@ -1,7 +1,5 @@
 name: sharde-fujimo-hn
 
-x-mongo-image: &mongo-image mongo:7.0.14@sha256:0032d2ca20db5fa34926f196c8a43b74e34ed239a7f2453ff1505b6f12ba8ea6
-
 networks:
   master-netwrk:
     external: true
@@ -9,7 +7,9 @@ networks:
 services:
   sharde-fujimo-hn:
     container_name: ${APP_NAME}_sharde-fujimo-hn
-    image: *mongo-image
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./keyfile:/etc
       - sharde-fujimo-hn-da:/data/db
