@@ -2,6 +2,8 @@
 
 set -e
 
+cd "$(dirname "$0")"
+
 for name in \
   keygen \
   devlop-router-io \

@@ -2,9 +2,11 @@
 
 set -e
 
+cd "$(dirname "$0")"
+
 find . -type f -name "*.sh" -exec chmod +x {} \;
 
-chmod +x driver/shutdown/mongos-router-sg.sh && sudo driver/shutdown/mongos-router-sg.sh
-chmod +x driver/boot/mongos-router-sg.sh && sudo driver/boot/mongos-router-sg.sh
+chmod +x ../shutdown/mongos-router-sg.sh && sudo ../shutdown/mongos-router-sg.sh
+chmod +x ../boot/mongos-router-sg.sh && sudo ../boot/mongos-router-sg.sh
 
 echo "mongos-router-sg reboot successfully!"
