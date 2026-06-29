@@ -43,4 +43,6 @@ chmod +x mongos-router-dn.sh && sudo ./mongos-router-dn.sh
 chmod +x mongos-router-hn.sh && sudo ./mongos-router-hn.sh
 chmod +x mongos-router-sg.sh && sudo ./mongos-router-sg.sh
 
+chmod +x mongos-expres-io.sh && sudo ./mongos-expres-io.sh
+
 echo "Master boot successfully!"
