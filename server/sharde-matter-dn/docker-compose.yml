@@ -1,11 +1,11 @@
-name: sharde-matter-dn
+name: wizard-sharde-matter-dn
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  sharde-matter-dn:
+  wizard-sharde-matter-dn:
     container_name: ${APP_NAME}_sharde-matter-dn
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - sharde-matter-dn-da:/data/db
-      - sharde-matter-dn-cf:/data/configdb
+      - wizard-sharde-matter-dn-da:/data/db
+      - wizard-sharde-matter-dn-cf:/data/configdb
       - ./init/init-sharde-matter.js:/init/init-sharde-matter.js:ro
     env_file: ../../.env
     ports:
@@ -23,5 +23,5 @@ services:
       - master-netwrk
 
 volumes:
-  sharde-matter-dn-da:
-  sharde-matter-dn-cf:
+  wizard-sharde-matter-dn-da:
+  wizard-sharde-matter-dn-cf:

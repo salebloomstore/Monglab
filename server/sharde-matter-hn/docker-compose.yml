@@ -1,11 +1,11 @@
-name: sharde-matter-hn
+name: wizard-sharde-matter-hn
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  sharde-matter-hn:
+  wizard-sharde-matter-hn:
     container_name: ${APP_NAME}_sharde-matter-hn
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - sharde-matter-hn-da:/data/db
-      - sharde-matter-hn-cf:/data/configdb
+      - wizard-sharde-matter-hn-da:/data/db
+      - wizard-sharde-matter-hn-cf:/data/configdb
     env_file: ../../.env
     ports:
       - ${SHARDE_MATTER_HN_PORT}:${SHARDE_MATTER_HN_PORT_OF}
@@ -22,5 +22,5 @@ services:
       - master-netwrk
 
 volumes:
-  sharde-matter-hn-da:
-  sharde-matter-hn-cf:
+  wizard-sharde-matter-hn-da:
+  wizard-sharde-matter-hn-cf:

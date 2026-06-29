@@ -1,11 +1,11 @@
-name: mongos-expres-io
+name: wizard-mongos-expres-io
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  mongos-expres-io:
+  wizard-mongos-expres-io:
     container_name: ${APP_NAME}_mongos-expres-io
     build:
       context: .

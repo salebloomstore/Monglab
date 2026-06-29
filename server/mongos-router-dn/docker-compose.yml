@@ -1,11 +1,11 @@
-name: mongos-router-dn
+name: wizard-mongos-router-dn
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  mongos-router-dn:
+  wizard-mongos-router-dn:
     container_name: ${APP_NAME}_mongos-router-dn
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - mongos-router-dn-da:/data/db
-      - mongos-router-dn-cf:/data/configdb
+      - wizard-mongos-router-dn-da:/data/db
+      - wizard-mongos-router-dn-cf:/data/configdb
       - ./init/cluster.js:/init/cluster.js:ro
     env_file: ../../.env
     ports:
@@ -23,5 +23,5 @@ services:
       - master-netwrk
 
 volumes:
-  mongos-router-dn-da:
-  mongos-router-dn-cf:
+  wizard-mongos-router-dn-da:
+  wizard-mongos-router-dn-cf:

@@ -1,11 +1,11 @@
-name: sharde-fujimo-hn
+name: wizard-sharde-fujimo-hn
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  sharde-fujimo-hn:
+  wizard-sharde-fujimo-hn:
     container_name: ${APP_NAME}_sharde-fujimo-hn
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - sharde-fujimo-hn-da:/data/db
-      - sharde-fujimo-hn-cf:/data/configdb
+      - wizard-sharde-fujimo-hn-da:/data/db
+      - wizard-sharde-fujimo-hn-cf:/data/configdb
     env_file: ../../.env
     ports:
       - ${SHARDE_FUJIMO_HN_PORT}:${SHARDE_FUJIMO_HN_PORT_OF}
@@ -22,5 +22,5 @@ services:
       - master-netwrk
 
 volumes:
-  sharde-fujimo-hn-da:
-  sharde-fujimo-hn-cf:
+  wizard-sharde-fujimo-hn-da:
+  wizard-sharde-fujimo-hn-cf:

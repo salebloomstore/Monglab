@@ -1,11 +1,11 @@
-name: sharde-fansip-hn
+name: wizard-sharde-fansip-hn
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  sharde-fansip-hn:
+  wizard-sharde-fansip-hn:
     container_name: ${APP_NAME}_sharde-fansip-hn
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - sharde-fansip-hn-da:/data/db
-      - sharde-fansip-hn-cf:/data/configdb
+      - wizard-sharde-fansip-hn-da:/data/db
+      - wizard-sharde-fansip-hn-cf:/data/configdb
     env_file: ../../.env
     ports:
       - ${SHARDE_FANSIP_HN_PORT}:${SHARDE_FANSIP_HN_PORT_OF}
@@ -22,5 +22,5 @@ services:
       - master-netwrk
 
 volumes:
-  sharde-fansip-hn-da:
-  sharde-fansip-hn-cf:
+  wizard-sharde-fansip-hn-da:
+  wizard-sharde-fansip-hn-cf:

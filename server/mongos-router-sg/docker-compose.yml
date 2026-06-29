@@ -1,11 +1,11 @@
-name: mongos-router-sg
+name: wizard-mongos-router-sg
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  mongos-router-sg:
+  wizard-mongos-router-sg:
     container_name: ${APP_NAME}_mongos-router-sg
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - mongos-router-sg-da:/data/db
-      - mongos-router-sg-cf:/data/configdb
+      - wizard-mongos-router-sg-da:/data/db
+      - wizard-mongos-router-sg-cf:/data/configdb
     env_file: ../../.env
     ports:
       - ${MONGOS_ROUTER_SG_PORT}:${MONGOS_ROUTER_SG_PORT_OF}
@@ -22,5 +22,5 @@ services:
       - master-netwrk
 
 volumes:
-  mongos-router-sg-da:
-  mongos-router-sg-cf:
+  wizard-mongos-router-sg-da:
+  wizard-mongos-router-sg-cf:

@@ -1,11 +1,11 @@
-name: sharde-fujimo-sg
+name: wizard-sharde-fujimo-sg
 
 networks:
   master-netwrk:
     external: true
 
 services:
-  sharde-fujimo-sg:
+  wizard-sharde-fujimo-sg:
     container_name: ${APP_NAME}_sharde-fujimo-sg
     build:
       context: .
@@ -13,8 +13,8 @@ services:
     restart: always
     volumes:
       - ./keyfile:/etc
-      - sharde-fujimo-sg-da:/data/db
-      - sharde-fujimo-sg-cf:/data/configdb
+      - wizard-sharde-fujimo-sg-da:/data/db
+      - wizard-sharde-fujimo-sg-cf:/data/configdb
     env_file: ../../.env
     ports:
       - ${SHARDE_FUJIMO_SG_PORT}:${SHARDE_FUJIMO_SG_PORT_OF}
@@ -22,5 +22,5 @@ services:
       - master-netwrk
 
 volumes:
-  sharde-fujimo-sg-da:
-  sharde-fujimo-sg-cf:
+  wizard-sharde-fujimo-sg-da:
+  wizard-sharde-fujimo-sg-cf:
