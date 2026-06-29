@@ -58,6 +58,7 @@ find . -type f -name "*.sh" -exec chmod +x {} \;
 ### Build
 
 ```bash
+cp .env.example .env
 chmod +x driver/reboot/keygen.sh && sudo ./driver/reboot/keygen.sh
-cp .env.example .env && chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
+chmod +x driver/reboot/master.sh && sudo ./driver/reboot/master.sh
 ```
