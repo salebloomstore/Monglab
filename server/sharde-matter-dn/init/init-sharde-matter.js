@@ -7,28 +7,39 @@ rs.initiate({
   members: [
     {
       _id: 0,
-      host: process.env.SHARDE_MATTER_DN_ADRS + ":" + process.env.SHARDE_MATTER_DN_PORT_OF,
-      priority: 2
+      host:
+        process.env.SHARDE_MATTER_DN_ADRS +
+        ":" +
+        process.env.SHARDE_MATTER_DN_PORT_OF,
+      priority: 2,
     },
     {
       _id: 1,
-      host: process.env.SHARDE_MATTER_HN_ADRS + ":" + process.env.SHARDE_MATTER_HN_PORT_OF,
-      priority: 1
+      host:
+        process.env.SHARDE_MATTER_HN_ADRS +
+        ":" +
+        process.env.SHARDE_MATTER_HN_PORT_OF,
+      priority: 1,
     },
     {
       _id: 2,
-      host: process.env.SHARDE_MATTER_SG_ADRS + ":" + process.env.SHARDE_MATTER_SG_PORT_OF,
-      priority: 1
-    }
-  ]
-})
+      host:
+        process.env.SHARDE_MATTER_SG_ADRS +
+        ":" +
+        process.env.SHARDE_MATTER_SG_PORT_OF,
+      priority: 1,
+    },
+  ],
+});
 
-print("⏳ WAITING PRIMARY...")
+print("⏳ WAITING PRIMARY...");
 
 while (true) {
-  const hello = db.hello()
-  if (hello.isWritablePrimary) { break }
-  sleep(2000)
+  const hello = db.hello();
+  if (hello.isWritablePrimary) {
+    break;
+  }
+  sleep(2000);
 }
 
 // =====================================================
@@ -36,7 +47,7 @@ while (true) {
 // =====================================================
 
 // SWITCH TO ADMIN DATABASE
-db = db.getSiblingDB("admin")
+db = db.getSiblingDB("admin");
 
 db.createUser({
   user: process.env.MONGO_ADMINIST_SHARDE_MATTER,
@@ -45,9 +56,9 @@ db.createUser({
   roles: [
     {
       role: "root",
-      db: "admin"
-    }
-  ]
-})
+      db: "admin",
+    },
+  ],
+});
 
-print("🔐 SHARDE MATTER ADMIN USER CREATED SUCCESSFULLY")
+print("🔐 SHARDE MATTER ADMIN USER CREATED SUCCESSFULLY");
